@@ -1,0 +1,31 @@
+<h1>Free Event </h1>
+
+<a href="{%url 'dashboard'%}" > Back </a>
+<br>
+<br>
+<ul>
+    {% for event in object_list %}
+
+        <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
+            Description: {{event.description}}<br>
+            Location: {{event.location}} <br>
+
+            {%if event.price%}
+                Price: {{event.price}}<br>
+            {%else%}
+                Price: Free <br>
+            {%endif%}
+
+            {%if event.space_capacity%}
+            Space Capacity: {{event.space_capacity}}<br>
+            {%endif%}
+
+            Event Date: {{event.event_date}} <br>
+
+            {%if event.event_end_date%}
+                End of Registration Date: {{event.event_end_date}} 
+            {%endif%}
+    </li>
+    <hr>
+    {% endfor %}
+    </ul>

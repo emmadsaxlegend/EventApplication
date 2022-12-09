@@ -1,0 +1,118 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<h1>
+    <span>{{ user.username }}, 
+        {% if user.is_superuser %}
+            Admin
+        {% else %}     
+            Cashier    
+        {% endif %}
+</span>
+</h1>
+<h1> PAID EVENTS </h1>
+
+<a href="{%url 'dashboard'%}" > Back </a>
+<br>
+<br>
+
+<div class="messages">
+    {% for message in messages %}
+
+        <div class="alert alert-success" style="color:green;"> {{ message }}</div>
+
+    {% endfor %}
+</div>
+  
+<form class = "box" action= "{% url 'create_paid_event' %}" method="POST" enctype="multipart/for-data">
+    {% csrf_token %}
+    <div>
+    <label>Enter Event Name</label> <br>
+    <input type="text" required onkeyup="this.setAttribute('value', this.value);" name="event_name" placeholder="Enter Event Name" value="">
+  </div>
+  <div>
+    <label>Location</label> <br>
+    <select name="location" id="select">
+        <option value="" selected="selected">- Select State -</option>
+        <option>ABUJA FCT</option>
+        <option>ABIA</option>
+        <option>ADAMAWA</option>
+        <option>AKWA IBOM</option>
+        <option>ANAMBRA</option>
+        <option>BAUCHI</option>
+        <option>BAYELSA</option>
+        <option>BENUE</option>
+        <option>BORNO</option>
+        <option>CROSS RIVER</option>
+        <option>DELTA</option>
+        <option>EBONYI</option>
+        <option>EDO</option>
+        <option>EKITI</option>
+        <option>ENUGU</option>
+        <option>GOMBE</option>
+        <option>IMO</option>
+        <option>JIGAWA</option>
+        <option>KADUNA</option>
+        <option>KANO</option>
+        <option>KATSINA</option>
+        <option>KEBBI</option>
+        <option>KOGI</option>
+        <option>KWARA</option>
+        <option>LAGOS</option>
+        <option>NASSARAWA</option>
+        <option>NIGER</option>
+        <option>OGUN</option>
+        <option>ONDO</option>
+        <option>OSUN</option>
+        <option>OYO</option>
+        <option>PLATEAU</option>
+        <option>RIVERS</option>
+        <option>SOKOTO</option>
+        <option>TARABA</option>
+        <option>YOBE</option>
+        <option>ZAMFARA</option>
+        </select>
+  </div>
+
+
+  <div>
+    <label> Description </label> <br>
+    <textarea name="description" required></textarea>
+  </div>
+  <div>
+    <label> Select Event Date and Time </label> <br>
+    <input type="datetime-local" name="event_date">
+</div>
+<br>
+<div>
+    <label> Price </label> <br>
+    <input type="number" name="price">
+</div>
+<br>
+<div>
+    <label> Space Capacity </label> <br>
+    <input type="number" name="space_capacity">
+</div>
+<br>
+
+
+<div>
+    <label> Select End of Registration Date </label> <br>
+    <input type="datetime-local" name="event_end_date">
+</div>
+<br>
+
+<div>
+<label for="avatar">Choose a profile picture:</label>
+<br>
+<input type="file" id="avatar" name="header_image" accept="image/png, image/jpeg">
+</div>
+
+<br>
+
+
+    <input type="submit" name="sign-in" value="Sign in">
+  
+   
+  </form> 
