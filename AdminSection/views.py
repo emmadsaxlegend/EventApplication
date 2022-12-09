@@ -31,7 +31,7 @@ def login(request):
 
 
 def dashboard(request):
-    return render(request, "base.html")
+    return render(request, "home.html")
 
 
 def free(request):
@@ -90,13 +90,24 @@ def create_paid_event(request):
 
 class FreeView(ListView):
     model = Event
-    template_name = "free_events_page.html"
+    template_name = "events_page.html"
 
 
 class FreeEventDetailsView(DetailView):
     # modal = Free
     queryset = Event.objects.all()
-    template_name = "FreeEventDetails.html"
+    template_name = "EventDetails.html"
 
+class FreeEventView(ListView):
+    model = Event
+    template_name = "free-event-page.html"
 
+class PaidEventView(ListView):
+    model = Event
+    template_name = "paid-event-page.html"
 
+def paid_view(request):
+    return render(request, "paid-event-page.html")
+
+def free_view(request):
+    return render(request, "free-event-page.html")

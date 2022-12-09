@@ -1,10 +1,16 @@
-<h1>Free Event </h1>
+{%extends 'base.html' %}
 
-<a href="{%url 'dashboard'%}" > Back </a>
+{% block content%}
+<h1>Free Events Page </h1>
+
+<a href="{%url 'dashboard'%}" > Back </a> <br>
+<a href="{%url 'paid-event-page'%}" > View Paid Event </a>
+
 <br>
 <br>
 <ul>
     {% for event in object_list %}
+        {%if event.price == NULL%}
 
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
             Description: {{event.description}}<br>
@@ -12,8 +18,6 @@
 
             {%if event.price%}
                 Price: {{event.price}}<br>
-            {%else%}
-                Price: Free <br>
             {%endif%}
 
             {%if event.space_capacity%}
@@ -27,5 +31,7 @@
             {%endif%}
     </li>
     <hr>
+    {%endif%}
     {% endfor %}
     </ul>
+{%endblock%}

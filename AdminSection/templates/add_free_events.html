@@ -1,6 +1,5 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'style.css' %}">
+{%extends 'base.html' %}
+{% block content%}
 
 <h1>
     <span>{{ user.username }}, 
@@ -11,7 +10,7 @@
         {% endif %}
 </span>
 </h1>
-<h1> FREE EVENTS </h1>
+<h1> ADD FREE EVENTS </h1>
 
 <a href="{%url 'dashboard'%}" > Back </a>
 <br>
@@ -99,3 +98,5 @@
   
    
   </form> 
+
+  {%endblock%}
