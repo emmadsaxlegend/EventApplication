@@ -19,3 +19,8 @@ class Event(models.Model):
     def __str__(self):
         return self.event_name + " event in " + str(self.location)
  
+    def get_absolute_url(self):
+        # ------------Return to Details View ---------------
+        # return reverse("article-detail", kwargs={"pk": self.pk})
+        #-----------Return to Home View-------------
+        return reverse("dashboard")  

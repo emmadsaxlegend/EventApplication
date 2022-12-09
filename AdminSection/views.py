@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from datetime import datetime, date
 from .models import Event
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 
 # Create your views here.
 def home(request):
@@ -106,8 +106,8 @@ class PaidEventView(ListView):
     model = Event
     template_name = "paid-event-page.html"
 
-def paid_view(request):
-    return render(request, "paid-event-page.html")
 
-def free_view(request):
-    return render(request, "free-event-page.html")
+class UpdateEventView(UpdateView):
+    model = Event
+    template_name = 'update-event.html'
+    fields = ['event_name', 'location', 'price', 'space_capacity', 'description', 'event_date', 'event_end_date']
