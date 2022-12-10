@@ -23,4 +23,4 @@ class Event(models.Model):
         # ------------Return to Details View ---------------
         # return reverse("article-detail", kwargs={"pk": self.pk})
         #-----------Return to Home View-------------
-        return reverse("dashboard")  
+        return reverse("free_events_page")  

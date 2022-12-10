@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import FreeView, FreeEventDetailsView,FreeEventView,PaidEventView, UpdateEventView
+from .views import FreeView, FreeEventDetailsView,FreeEventView,PaidEventView, UpdateEventView, DeleteEventView
 
 urlpatterns = [
     path("", views.home, name="home"),
@@ -17,6 +17,7 @@ urlpatterns = [
 
     path("paid_event_page/", PaidEventView.as_view(), name="paid-event-page"),
     path("free_event_page/", FreeEventView.as_view(), name="free-event-page"),
-    path('article/edit/<int:pk>/', UpdateEventView.as_view(), name= "update_event" )
+    path('event/edit/<int:pk>/', UpdateEventView.as_view(), name= "update_event" ),
+    path('event/<int:pk>/delete', DeleteEventView.as_view(), name= "delete_event" )
 
 ]

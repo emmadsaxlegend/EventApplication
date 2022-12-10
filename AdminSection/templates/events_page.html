@@ -6,9 +6,13 @@
 <a href="{%url 'dashboard'%}" > Back </a>
 <br>
 <br>
+{% for message in messages %}
+          <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
+    {% endfor %}
 <ul>
     {% for event in object_list %}
             <a href="{% url 'update_event' event.pk%}">Edit </a>
+            <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
 
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
             Description: {{event.description}}<br>

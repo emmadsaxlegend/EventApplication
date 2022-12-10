@@ -3,6 +3,13 @@
 {%block content %}
 
     <h2> Edit Events </h2>
+
+    {% for message in messages %}
+        <div class="alert">
+          <div style="text-align: center"><strong>{{message}}</strong></div>
+        </div>
+    {% endfor %}
+    
     <div class="form-group">
         <form method="POST">
         {% csrf_token %}

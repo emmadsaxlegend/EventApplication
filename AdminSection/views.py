@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from datetime import datetime, date
 from .models import Event
-from django.views.generic import ListView, DetailView, UpdateView
-
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 def home(request):
     return render(request, "login.html")
@@ -91,6 +92,7 @@ def create_paid_event(request):
 class FreeView(ListView):
     model = Event
     template_name = "events_page.html"
+    
 
 
 class FreeEventDetailsView(DetailView):
@@ -107,7 +109,15 @@ class PaidEventView(ListView):
     template_name = "paid-event-page.html"
 
 
-class UpdateEventView(UpdateView):
+class UpdateEventView(SuccessMessageMixin, UpdateView):
     model = Event
     template_name = 'update-event.html'
     fields = ['event_name', 'location', 'price', 'space_capacity', 'description', 'event_date', 'event_end_date']
+    success_message = 'Item Updated successfully!!'
+
+
+class DeleteEventView(SuccessMessageMixin, DeleteView):
+    model = Event
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy('free_events_page')
+    success_message = 'Item deleted successfully!!'
