@@ -10,10 +10,12 @@
           <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
     {% endfor %}
 <ul>
+    
     {% for event in object_list %}
+        {%if user.is_superuser%}
             <a href="{% url 'update_event' event.pk%}">Edit </a>
             <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
-
+        {%endif%}
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
             Description: {{event.description}}<br>
             Location: {{event.location}} <br>

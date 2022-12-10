@@ -92,7 +92,6 @@ def create_paid_event(request):
 class FreeView(ListView):
     model = Event
     template_name = "events_page.html"
-    
 
 
 class FreeEventDetailsView(DetailView):

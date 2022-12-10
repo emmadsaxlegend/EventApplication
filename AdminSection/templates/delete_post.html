@@ -2,6 +2,8 @@
 
 {%block content %}
 
+{% if user.is_superuser %}
+
     <h2> Delete Events </h2>
 
 
@@ -13,4 +15,10 @@
         <button class= 'btn btn-secondary'> Delete </button>
     
     </div>
+{%else%}
+<br>
+<br>
+<div class="alert alert-danger"> You are not an admin. </div>
+
+{% endif %}
 {%endblock%}

@@ -2,6 +2,8 @@
 
 {%block content %}
 
+{% if user.is_superuser %}
+
     <h2> Edit Events </h2>
 
     {% for message in messages %}
@@ -17,4 +19,11 @@
             <button class= 'btn btn-secondary'> Update </button>
     
     </div>
+
+    {%else%}
+<br>
+<br>
+<div class="alert alert-danger"> You are not an admin. </div>
+
+{% endif %}
 {%endblock%}

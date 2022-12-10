@@ -1,14 +1,10 @@
 {%extends 'base.html' %}
 {% block content%}
 
+{% if user.is_superuser %}
+
 <h1>
-    <span>{{ user.username }}, 
-        {% if user.is_superuser %}
-            Admin
-        {% else %}     
-            Cashier    
-        {% endif %}
-</span>
+    <span>{{ user.username }}, Admin </span>
 </h1>
 <h1> ADD FREE EVENTS </h1>
 
@@ -99,4 +95,10 @@
    
   </form> 
 
+  {%else%}
+  <br>
+  <br>
+  <div class="alert alert-danger" style="color:green;"> You are not an admin. </div>
+  
+  {% endif %}
   {%endblock%}

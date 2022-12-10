@@ -1,14 +1,12 @@
 {%extends 'base.html' %}
 {% block content%}
+
+{% if user.is_superuser %}
+
 <h1>
-    <span>{{ user.username }}, 
-        {% if user.is_superuser %}
-            Admin
-        {% else %}     
-            Cashier    
-        {% endif %}
-</span>
+    <span>{{ user.username }}, Admin </span>
 </h1>
+
 <div class="messages">
     {% for message in messages %}
 
@@ -32,4 +30,11 @@
 <a href = {% url 'free-event-page'%}> View Free Events </a>
 <br>
 <br>
+{%else%}
+<br>
+<br>
+<div class="alert alert-danger"> You are not an admin. </div>
+
+{% endif %}
+
 {%endblock%}
