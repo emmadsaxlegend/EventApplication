@@ -22,7 +22,12 @@ class UserPaidEventView(ListView):
     model = Event
     template_name = "user-paid-event-page.html"
 
-class DateEventView(ListView):
+class DateAccendView(ListView):
     model = Event
-    template_name = "by_date.html"
+    template_name = "by_date_accending.html"
     ordering = 'event_date'
+
+class DateDecendView(ListView):
+    model = Event
+    template_name = "by_date_decending.html"
+    ordering = '-event_date'
