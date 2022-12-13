@@ -8,6 +8,7 @@ class EventView(ListView):
     model = Event
     template_name = "all-events.html"
 
+
 class EventDetailsView(DetailView):
     # modal = Free
     queryset = Event.objects.all()
@@ -20,3 +21,8 @@ class UserFreeEventView(ListView):
 class UserPaidEventView(ListView):
     model = Event
     template_name = "user-paid-event-page.html"
+
+class DateEventView(ListView):
+    model = Event
+    template_name = "by_date.html"
+    ordering = 'event_date'

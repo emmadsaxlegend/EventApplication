@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import EventView, EventDetailsView, UserPaidEventView, UserFreeEventView
+from .views import EventView, EventDetailsView, UserPaidEventView, UserFreeEventView, DateEventView
 
 urlpatterns = [
 
@@ -9,5 +9,8 @@ urlpatterns = [
 
     path("paid_event_page/", UserPaidEventView.as_view(), name="paid_event_page"),
     path("free_event_page/", UserFreeEventView.as_view(), name="free_event_page"),
+
+    path("order-by-date/", DateEventView.as_view(), name="order_by_date"),
+
 
 ]

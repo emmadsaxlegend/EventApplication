@@ -1,0 +1,45 @@
+{%extends 'base.html' %}
+
+{% block content%}
+<h1>ALl Events </h1>
+
+<br>
+<ul>
+    
+    {% for event in object_list %}
+        {%if not event.expired_event%}
+        
+        <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
+            Description: {{event.description}}<br>
+            Location: {{event.location}} <br>
+
+            {%if event.price%}
+                Price: {{event.price}}<br>
+            {%else%}
+                Price: Free <br>
+            {%endif%}
+
+            {%if event.space_capacity%}
+            Space Capacity: {{event.space_capacity}}<br>
+            {%endif%}
+
+            {%if event.expired_event%}
+                Event Date: <span style= "color:red"> Event Expired</span> <br>
+            {%else%}
+                Event Date: {{event.event_date}} <br>
+            {%endif%}
+
+            {%if event.event_end_date%}
+                {%if event.expired_reg%}
+                End of Registration Date: <span style= "color:red"> Registration Ended</span>
+                {%else%}
+                End of Registration Date: {{event.event_end_date}} <br>
+                {%endif%}
+            {%endif%}
+            
+    </li>
+    <hr>
+    {%endif%}
+    {% endfor %}
+    </ul>
+{%endblock%}
