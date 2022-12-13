@@ -1,0 +1,27 @@
+{%extends 'base.html' %}
+{% block content%}
+
+
+<h1> Event Details </h1>
+
+    Event Name: {{event.event_name}} <br/>
+    Description: {{event.description}}<br>
+    Location: {{event.location}} <br>
+
+    {%if event.price%}
+        Price: {{event.price}}<br>
+    {%else%}
+        Price: Free <br>
+    {%endif%}
+
+    {%if event.space_capacity%}
+    Space Capacity: {{event.space_capacity}}<br>
+    {%endif%}
+
+    Event Date: {{event.event_date}} <br>
+
+    {%if event.event_end_date%}
+        End of Registration Date: {{event.event_end_date}} 
+    {%endif%}
+
+{%endblock%}
