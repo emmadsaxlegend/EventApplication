@@ -21,7 +21,7 @@
     {% endfor %}
 </div>
   
-<form class = "box" action= "{% url 'create_paid_event' %}" method="POST" enctype="multipart/for-data">
+<form class = "box" action= "{% url 'create_paid_event' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
     <label>Enter Event Name</label> <br>
@@ -102,7 +102,7 @@
 <div>
 <label for="avatar">Choose a profile picture:</label>
 <br>
-<input type="file" id="avatar" name="header_image" accept="image/png, image/jpeg">
+<input type="file" name="header_images" accept="image/*">
 </div>
 
 <br>

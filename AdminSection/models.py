@@ -14,7 +14,7 @@ class Event(models.Model):
     event_date = models.DateTimeField(null=True, blank=True)
     event_end_date = models.DateTimeField(null=True, blank=True)
     slot_left = models.CharField(max_length = 255, blank=True, null=True,)
-    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
+    header_images = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
         return self.event_name + " event in " + str(self.location)

@@ -43,26 +43,26 @@ def paid(request):
 
 
 def create_free_event(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.FILES['header_images']:
         event_name = request.POST["event_name"]
         location = request.POST["location"]
         description = request.POST["description"]
         event_date = request.POST["event_date"]
-        header_image = request.POST["header_image"]
+        header_images = request.FILES["header_images"]
 
         a = Event(
             event_name=event_name,
             location=location,
             description=description,
             event_date=event_date,
-            header_image=header_image,
+            header_images=header_images,
         )
         a.save()
         messages.success(request, "Event Registered Successfully")
         return redirect("dashboard")
 
 def create_paid_event(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.FILES['header_images']:
         event_name = request.POST["event_name"]
         location = request.POST["location"]
         price = request.POST["price"]
@@ -70,14 +70,14 @@ def create_paid_event(request):
         event_end_date = request.POST["event_end_date"]
         description = request.POST["description"]
         event_date = request.POST["event_date"]
-        header_image = request.POST["header_image"]
+        header_images = request.FILES["header_images"]
 
         a = Event(
             event_name=event_name,
             location=location,
             description=description,
             event_date=event_date,
-            header_image=header_image,
+            header_images=header_images,
             event_end_date=event_end_date,
             space_capacity=space_capacity,
             price=price

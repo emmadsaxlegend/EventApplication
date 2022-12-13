@@ -2,8 +2,10 @@
 {% block content%}
 
 
-<h1> Event Details </h1>
-
+<h1> Event Detail </h1>
+{%if event.header_images%}
+    <img src = "{{event.header_images.url}}" width=400 height = 400><br>
+{%endif%}
     Event Name: {{event.event_name}} <br/>
     Description: {{event.description}}<br>
     Location: {{event.location}} <br>
@@ -21,7 +23,12 @@
     Event Date: {{event.event_date}} <br>
 
     {%if event.event_end_date%}
-        End of Registration Date: {{event.event_end_date}} 
+        End of Registration Date: {{event.event_end_date}} <br>
     {%endif%}
+
+    Slot Left: {{event.slot_left}}<br>
+
+    <a href="{% url 'pays' %}">Click</a>
+
 
 {%endblock%}
