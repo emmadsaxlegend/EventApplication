@@ -1,10 +1,13 @@
 from django.urls import path
 from . import views
-from .views import FreeView, FreeEventDetailsView
+from .views import EventView, EventDetailsView, UserPaidEventView, UserFreeEventView
 
 urlpatterns = [
 
-    path("", FreeView.as_view(), name="user_events_page"),
-    path("free-details-url/<int:pk>/", FreeEventDetailsView.as_view(), name="free_event_details_page"),
+    path("", EventView.as_view(), name="user_events_page"),
+    path("free-details-url/<int:pk>/", EventDetailsView.as_view(), name="free_event_details_page"),
+
+    path("paid_event_page/", UserPaidEventView.as_view(), name="paid_event_page"),
+    path("free_event_page/", UserFreeEventView.as_view(), name="free_event_page"),
 
 ]

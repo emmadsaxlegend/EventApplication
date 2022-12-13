@@ -89,12 +89,12 @@ def create_paid_event(request):
 
 
 
-class FreeView(ListView):
+class EventView(ListView):
     model = Event
     template_name = "events_page.html"
 
 
-class FreeEventDetailsView(DetailView):
+class EventDetailsView(DetailView):
     # modal = Free
     queryset = Event.objects.all()
     template_name = "EventDetails.html"

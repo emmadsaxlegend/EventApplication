@@ -1,0 +1,33 @@
+{%extends 'base.html' %}
+
+{% block content%}
+<h1>Paid Events Page</h1>
+
+<a href="{%url 'user_events_page'%}" > Go Back </a> <br>
+
+<br>
+<br>
+<ul>
+    {% for event in object_list %}
+        {%if event.price %}
+
+        <li>
+            Event Name <a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
+            
+            Description: {{event.description}}<br>
+            
+            Location: {{event.location}} <br>
+
+            Price: {{event.price}}<br>
+
+            Space Capacity: {{event.space_capacity}}<br>
+
+            Event Date: {{event.event_date}} <br>
+
+            End of Registration Date: {{event.event_end_date}} 
+    </li>
+    <hr>
+    {%endif%}
+    {% endfor %}
+    </ul>
+{%endblock%}

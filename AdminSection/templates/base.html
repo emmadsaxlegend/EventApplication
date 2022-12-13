@@ -27,23 +27,14 @@
             
             {%if user.is_superuser %}
 
-            {% comment %} <li class="nav-item dropdown active">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add Event
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="">Add Free Event</a>
-                  <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="">Add Paid Event</a>
-              </div>
-            </li> {% endcomment %}
 
             {%else%}
+         
             <li class="nav-item active">
-              <a class="nav-link" href="{%url 'free-event-page'%}">Free <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{%url 'free_event_page'%}">Free <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="{%url 'paid-event-page'%}">Paid</a>
+              <a class="nav-link" href="{%url 'paid_event_page'%}">Paid</a>
             </li>
 
             <li class="nav-item active">
