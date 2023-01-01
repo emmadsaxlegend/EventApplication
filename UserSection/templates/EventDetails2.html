@@ -27,8 +27,19 @@
     {%endif%}
 
     Slot Left: {{event.slot_left}}<br>
+    My Slot: {{event.my_slot}}<br>
 
-    <a href="{% url 'pays' %}">Click</a>
+    <form action="{% url 'vote' event.pk %}" method="post">
+        {% csrf_token %}
+        <div>
+            <input type="radio" name="poll" id="exampleRadios1" value="option1" checked='checked'>
+            <label for="exampleRadios1">
+                Hello
+            </label>
+        </div>
+        
+        <button type="submit" class="btn btn-outline-primary">Register</button>
+    </form>
 
 
 {%endblock%}

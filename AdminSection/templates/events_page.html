@@ -13,7 +13,11 @@
     
     {% for event in object_list %}
         {%if user.is_superuser%}
+            {%if event.expired_event%}
+            Cannot Edit 
+            {%else%}
             <a href="{% url 'update_event' event.pk%}">Edit </a>
+            {%endif%}
             <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
         {%endif%}
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>

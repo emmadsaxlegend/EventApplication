@@ -9,11 +9,12 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     paid = models.CharField(max_length=100, blank=True, null=True,)
     price = models.CharField(max_length=100, blank=True, null=True,)
-    space_capacity = models.CharField(max_length=100, blank=True, null=True,)
+    space_capacity = models.IntegerField(blank=True, null=True,)
     description = models.TextField(max_length=5000, blank=True, null=True,)
     event_date = models.DateTimeField(null=True, blank=True)
     event_end_date = models.DateTimeField(null=True, blank=True)
-    slot_left = models.CharField(max_length = 255, blank=True, null=True,)
+    bookings = models.IntegerField(default=0)
+    slot_left = models.IntegerField(default=0)
     header_images = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
@@ -35,3 +36,8 @@ class Event(models.Model):
         mydate = timezone.now()
         if mydate > self.event_date:
             return True
+
+
+    def my_slot(self, pk):
+        slot = int(self.space_capacity) + 1
+        return slot

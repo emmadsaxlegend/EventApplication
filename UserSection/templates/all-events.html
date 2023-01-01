@@ -5,7 +5,6 @@
 
 <br>
 <ul>
-    
     {% for event in object_list %}
         
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
@@ -35,9 +34,15 @@
                 End of Registration Date: {{event.event_end_date}} <br>
                 {%endif%}
             {%endif%}
+          
+            {%if event.slots%}
+                {{slot_left}}
+            {%endif%}
             
     </li>
     <hr>
     {% endfor %}
     </ul>
+
+   
 {%endblock%}

@@ -13,6 +13,5 @@ urlpatterns = [
     path("accend-date/", DateAccendView.as_view(), name="order_by_date_accend"),
     path("decend-date/", DateDecendView.as_view(), name="order_by_date_decend"),
 
-    path("free/", views.Pay, name="pays"),
-
+    path('vote/<int:pk>',views.register,name='vote'),
 ]
