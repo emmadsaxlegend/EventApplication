@@ -19,6 +19,11 @@
             <a href="{% url 'update_event' event.pk%}">Edit </a>
             {%endif%}
             <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
+
+            {%if event.is_cancelled == 0%}
+            <a href="{% url 'cancel_event' event.pk%}"> Cancel Event </a>
+            {%endif%}
+
         {%endif%}
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
             Description: {{event.description}}<br>
@@ -42,10 +47,14 @@
 
             {%if event.event_end_date%}
                 {%if event.expired_reg%}
-                End of Registration Date: <span style= "color:red"> Registration Ended</span>
+                End of Registration Date: <span style= "color:red"> Registration Ended</span> <br>
                 {%else%}
                 End of Registration Date: {{event.event_end_date}} <br>
                 {%endif%}
+            {%endif%}
+
+            {%if event.is_cancelled == 1%}
+            <span style= "color:red"> Event has been cancelled</span>
             {%endif%}
             
     </li>

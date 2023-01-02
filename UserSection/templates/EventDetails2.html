@@ -18,6 +18,10 @@
 
     {%if event.space_capacity%}
     Space Capacity: {{event.space_capacity}}<br>
+
+    {{event.bookings}} People Registered<br>
+
+    {{event.slot_left}} Slot left<br>
     {%endif%}
 
     Event Date: {{event.event_date}} <br>
@@ -26,20 +30,24 @@
         End of Registration Date: {{event.event_end_date}} <br>
     {%endif%}
 
-    Slot Left: {{event.slot_left}}<br>
-    My Slot: {{event.my_slot}}<br>
+    
+   
 
     <form action="{% url 'vote' event.pk %}" method="post">
         {% csrf_token %}
         <div>
-            <input type="radio" name="poll" id="exampleRadios1" value="option1" checked='checked'>
+            <input type="radio" name="poll" id="exampleRadios1" value="option1" required>
             <label for="exampleRadios1">
-                Hello
+                I have read Terms and Conditions
             </label>
         </div>
         
         <button type="submit" class="btn btn-outline-primary">Register</button>
     </form>
+
+    {%if event.event_end_date%}
+            {{event.bookDate}}
+    {%endif%}
 
 
 {%endblock%}

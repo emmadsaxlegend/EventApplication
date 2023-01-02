@@ -3,10 +3,26 @@
 {% block content%}
 <h1>ALl Events </h1>
 
+<a href="{%url 'dashboard'%}" > Back </a>
 <br>
+<br>
+{% for message in messages %}
+          <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
+    {% endfor %}
 <ul>
+    
     {% for event in object_list %}
-        
+        {%if user.is_superuser%}
+            {%if event.expired_event%}
+            Cannot Edit 
+            {%else%}
+            <a href="{% url 'update_event' event.pk%}">Edit </a>
+            {%endif%}
+            <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
+
+            <a href="{% url 'cancel_event' event.pk%}"> Cancel Event </a>
+
+        {%endif%}
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
             Description: {{event.description}}<br>
             Location: {{event.location}} <br>
@@ -29,21 +45,14 @@
 
             {%if event.event_end_date%}
                 {%if event.expired_reg%}
-                End of Registration Date: <span style= "color:red"> Registration Ended</span> <br>
+                End of Registration Date: <span style= "color:red"> Registration Ended</span>
                 {%else%}
                 End of Registration Date: {{event.event_end_date}} <br>
                 {%endif%}
             {%endif%}
-          
-            {%if event.slots%}
-                {{slot_left}} <br>
-            {%endif%}
-
             
     </li>
     <hr>
     {% endfor %}
     </ul>
-
-   
 {%endblock%}

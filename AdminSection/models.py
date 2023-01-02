@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from datetime import datetime, date
+
 
 # Create your models here.
 
@@ -16,6 +18,8 @@ class Event(models.Model):
     bookings = models.IntegerField(default=0)
     slot_left = models.IntegerField(default=0)
     header_images = models.ImageField(null=True, blank=True, upload_to="images/")
+    is_cancelled = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.event_name + " event in " + str(self.location)
@@ -36,8 +40,22 @@ class Event(models.Model):
         mydate = timezone.now()
         if mydate > self.event_date:
             return True
+    
+    def bookDate(self):
+        d0 = datetime.now().date()
+        d1 = self.event_end_date.date()
 
+        d2 = d1 - d0
+        delta = d2.days
 
-    def my_slot(self, pk):
-        slot = int(self.space_capacity) + 1
-        return slot
+        if delta == 1:
+            me = str(delta)
+            return "You have " + me + " day left to register"
+        elif delta > 0:
+            me = str(delta)
+            return "You have " + me + "days left to register"
+        else:
+            return "No more registration"
+    
+    
+        

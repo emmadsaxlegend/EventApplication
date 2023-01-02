@@ -18,6 +18,8 @@ urlpatterns = [
     path("paid_event_page/", PaidEventView.as_view(), name="paid-event-page"),
     path("free_event_page/", FreeEventView.as_view(), name="free-event-page"),
     path('event/edit/<int:pk>/', UpdateEventView.as_view(), name= "update_event" ),
-    path('event/<int:pk>/delete', DeleteEventView.as_view(), name= "delete_event" )
+    path('event/<int:pk>/delete', DeleteEventView.as_view(), name= "delete_event" ),
+    path('event/<int:pk>/cancel', views.Cancel, name= "cancel_event" ),
+
 
 ]

@@ -8,6 +8,7 @@ from .models import Event
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+
 # Create your views here.
 def home(request):
     return render(request, "login.html")
@@ -82,7 +83,9 @@ def create_paid_event(request):
             space_capacity=space_capacity,
             price=price
         )
+
         a.save()
+
         messages.success(request, "Event Registered Successfully")
         return redirect("dashboard")
 
@@ -115,8 +118,15 @@ class UpdateEventView(SuccessMessageMixin, UpdateView):
     success_message = 'Item Updated successfully!!'
 
 
+
 class DeleteEventView(SuccessMessageMixin, DeleteView):
     model = Event
     template_name = 'delete_post.html'
     success_url = reverse_lazy('free_events_page')
     success_message = 'Item deleted successfully!!'
+
+def Cancel(request, pk):
+    Event.objects.filter(id=pk).update(is_cancelled="True")
+    messages.success(request, "Event has been Cancelled Successfully")
+    return redirect("free_events_page")
+
