@@ -6,6 +6,8 @@
 <br>
 <ul>
     {% for event in object_list %}
+      {%if event.is_cancelled == 0%}
+
         
         <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
             Description: {{event.description}}<br>
@@ -42,6 +44,8 @@
             
     </li>
     <hr>
+    {%endif%}
+
     {% endfor %}
     </ul>
 

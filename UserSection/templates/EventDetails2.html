@@ -30,8 +30,12 @@
         End of Registration Date: {{event.event_end_date}} <br>
     {%endif%}
 
+    {% for customer in object_list %}
+    Number of people registered
+    {%endfor%}
+
     
-   
+   {% if event.space_capacity%}
 
     <form action="{% url 'vote' event.pk %}" method="post">
         {% csrf_token %}
@@ -41,9 +45,26 @@
                 I have read Terms and Conditions
             </label>
         </div>
+
+        <div>
+            <label>Email</label> 
+            <input type="text" required onkeyup="this.setAttribute('value', this.value);" name="email" placeholder="Email" value="">
+        </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="number" required onkeyup="this.setAttribute('value', this.value);" name="phone" placeholder="Phone Number" value=""> 
+          </div>
+
+          <div>
+            <input type="radio" name="event_id" id="exampleRadios12" value="option2" required>
+            <label for="exampleRadios1">
+                I have read Terms and Conditions 2
+            </label>
+        </div>
         
         <button type="submit" class="btn btn-outline-primary">Register</button>
     </form>
+    {%endif%}
 
     {%if event.event_end_date%}
             {{event.bookDate}}

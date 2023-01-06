@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from AdminSection.models import Event
+from AdminSection.models import Event, Customer
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
 from django.http import HttpResponse
@@ -41,9 +41,22 @@ def register(request,pk):
     poll=Event.objects.get(pk=pk)
     if request.method == 'POST':
         sel_opt=request.POST['poll']
+       
+
         if sel_opt == 'option1' :
             poll.bookings += 1
             poll.slot_left = poll.space_capacity - poll.bookings
+            
+            email = request.POST["email"]
+            phone = request.POST["phone"]
+            event_id=poll
+
+            b = Customer(
+                email=email,
+                phone=phone,
+                event_id = event_id 
+            )
+            b.save()
         
         else :
             return HttpResponse(400,'Invalid vote form')
@@ -55,3 +68,5 @@ def register(request,pk):
     }
 
     return render(request,'vote.html',context)
+
+

@@ -130,3 +130,13 @@ def Cancel(request, pk):
     messages.success(request, "Event has been Cancelled Successfully")
     return redirect("free_events_page")
 
+class CancelledView(ListView):
+    model = Event
+    template_name = "cancelled.html"
+
+def UndoCancel(request, pk):
+    Event.objects.filter(id=pk).update(is_cancelled="False")
+    messages.success(request, "Event has been Restored Successfully")
+    return redirect("free_events_page")
+
+

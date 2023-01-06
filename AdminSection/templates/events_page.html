@@ -8,57 +8,61 @@
 <br>
 {% for message in messages %}
           <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
-    {% endfor %}
+{% endfor %}
+
 <ul>
-    
     {% for event in object_list %}
-        {%if user.is_superuser%}
-            {%if event.expired_event%}
-            Cannot Edit 
-            {%else%}
-            <a href="{% url 'update_event' event.pk%}">Edit </a>
-            {%endif%}
-            <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
+        {%if event.is_cancelled == 0%}
 
-            {%if event.is_cancelled == 0%}
-            <a href="{% url 'cancel_event' event.pk%}"> Cancel Event </a>
-            {%endif%}
-
-        {%endif%}
-        <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
-            Description: {{event.description}}<br>
-            Location: {{event.location}} <br>
-
-            {%if event.price%}
-                Price: {{event.price}}<br>
-            {%else%}
-                Price: Free <br>
-            {%endif%}
-
-            {%if event.space_capacity%}
-            Space Capacity: {{event.space_capacity}}<br>
-            {%endif%}
-
-            {%if event.expired_event%}
-                Event Date: <span style= "color:red"> Event Expired</span> <br>
-            {%else%}
-                Event Date: {{event.event_date}} <br>
-            {%endif%}
-
-            {%if event.event_end_date%}
-                {%if event.expired_reg%}
-                End of Registration Date: <span style= "color:red"> Registration Ended</span> <br>
+            {%if user.is_superuser%}
+                {%if event.expired_event%}
+                    Cannot Edit 
                 {%else%}
-                End of Registration Date: {{event.event_end_date}} <br>
+                    <a href="{% url 'update_event' event.pk%}">Edit </a>
                 {%endif%}
-            {%endif%}
+                    <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
 
-            {%if event.is_cancelled == 1%}
-            <span style= "color:red"> Event has been cancelled</span>
+                {%if event.is_cancelled == 0%}
+                    <a href="{% url 'cancel_event' event.pk%}"> Cancel Event </a>
+                {%endif%}
+
             {%endif%}
+    <li>
+        <a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
+        Description: {{event.description}}<br>
+        Location: {{event.location}} <br>
+
+        {%if event.price%}
+            Price: {{event.price}}<br>
+        {%else%}
+            Price: Free <br>
+        {%endif%}
+
+        {%if event.space_capacity%}
+        Space Capacity: {{event.space_capacity}}<br>
+        {%endif%}
+
+        {%if event.expired_event%}
+            Event Date: <span style= "color:red"> Event Expired</span> <br>
+        {%else%}
+            Event Date: {{event.event_date}} <br>
+        {%endif%}
+
+        {%if event.event_end_date%}
+            {%if event.expired_reg%}
+                End of Registration Date: <span style= "color:red"> Registration Ended</span> <br>
+            {%else%}
+                End of Registration Date: {{event.event_end_date}} <br>
+            {%endif%}
+        {%endif%}
+
+        {%if event.is_cancelled == 1%}
+            <span style= "color:red"> Event has been cancelled</span>
+        {%endif%}
             
     </li>
     <hr>
-    {% endfor %}
-    </ul>
+    {%endif%}
+{% endfor %}
+</ul>
 {%endblock%}

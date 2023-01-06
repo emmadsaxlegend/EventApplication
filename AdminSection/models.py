@@ -9,7 +9,6 @@ from datetime import datetime, date
 class Event(models.Model):
     event_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    paid = models.CharField(max_length=100, blank=True, null=True,)
     price = models.CharField(max_length=100, blank=True, null=True,)
     space_capacity = models.IntegerField(blank=True, null=True,)
     description = models.TextField(max_length=5000, blank=True, null=True,)
@@ -58,4 +57,11 @@ class Event(models.Model):
             return "No more registration"
     
     
-        
+
+class Customer(models.Model):
+    email = models.CharField(max_length=100)
+    phone = models.IntegerField()    
+    event_id = models.CharField(max_length=100)
+
+
+

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import EventView, EventDetailsView,FreeEventView,PaidEventView, UpdateEventView, DeleteEventView
+from .views import EventView, EventDetailsView,FreeEventView,PaidEventView, UpdateEventView, DeleteEventView, CancelledView
 
 urlpatterns = [
     path("view_free_events/", views.home, name="home"),
@@ -20,6 +20,10 @@ urlpatterns = [
     path('event/edit/<int:pk>/', UpdateEventView.as_view(), name= "update_event" ),
     path('event/<int:pk>/delete', DeleteEventView.as_view(), name= "delete_event" ),
     path('event/<int:pk>/cancel', views.Cancel, name= "cancel_event" ),
+    path('event/cancelled-event', CancelledView.as_view(), name= "cancelled_event_page" ),
+    path('event/<int:pk>/uncancel', views.UndoCancel, name= "uncancel_event" ),
+
+
 
 
 ]
