@@ -58,18 +58,28 @@ def register(request,pk):
             phone = request.POST["phone"]
             event_id=poll.id
             price = poll.price
+            event_name = poll.event_name
+            event_date = poll.event_date
 
             b = Customer(
                 email=email,
                 phone=phone,
                 event_id = event_id,
-                amount = price
+                amount = price,
+                verified = False,
+                event_name = event_name,
+                event_date = event_date
             )
-            if Customer.objects.filter(email=email, phone=phone, event_id=event_id).exists():
+            if Customer.objects.filter(email=email, event_id=event_id, verified=False).exists():          
+                messages.error(request, "Your payment wasnt successfull for this event")
+                return render(request, 'make_payment.html', {'customer':b, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
+
+                
+            elif Customer.objects.filter(email=email, phone=phone, event_id=event_id).exists():
                 messages.error(request, "You have already registered for this event")
                 print("You have already registered for this event")
             else:
-                send_mail(subject, message, message_from,[email])
+                #send_mail(subject, message, message_from,[email])
                 b.save()
                 return render(request, 'make_payment.html', {'customer':b, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
 
@@ -86,11 +96,18 @@ def register(request,pk):
     return render(request,'vote.html',context)
 
 
-# def verify_payment(request:HttpRequest, ref:str) -> HttpResponse:
-#     payment = get_object_or_404(Customer, ref=ref)
-#     verified = payment.verify_payment()
-#     if verified:
-#         messages.success(request, "Verification successfully")
-#     else:
-#         messages.error(request, "Verification Failled")
-#     return redirect('user_events_page')
+def verify_payment(request:HttpRequest, ref:str) -> HttpResponse:
+    payment = get_object_or_404(Customer, ref=ref)
+    verified = payment.verify_payment()
+
+    subject = "Event registration"
+    message = "You have registered for event " + str(payment.event_name) + " which will be holding on the " + str(payment.event_date) + " \n Kindly show this message on getting to the venue. Thank You."
+    message_from = "Event XYZ"
+    
+    if not verified:
+        send_mail(subject, message, message_from,[payment.email])
+
+        messages.success(request, "Payment Received successfully \n Check your email for futher information")
+    else:
+        messages.error(request, "Verification Failled")
+    return redirect('user_events_page')

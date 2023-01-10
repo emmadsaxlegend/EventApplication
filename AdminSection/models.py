@@ -68,6 +68,10 @@ class Customer(models.Model):
     verified = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now=True)
     amount = models.PositiveIntegerField()
+    event_name = models.CharField(max_length=100)
+    event_date = models.DateTimeField(null=True, blank=True)
+
+
 
     class Meta:
         ordering = ()
@@ -87,18 +91,8 @@ class Customer(models.Model):
     def amount_value(self):
         return int(self.amount) * 100
     
-    # def verify_payment(self):
-    #     paystack = PayStack()
-    #     status, result = paystack.verify_payment(self.ref, self.amount)
-    #     if status:
-    #         if result['amount'] / 100 == self.amount:
-    #             self.verified = True
-    #         self.save()
-    #     if self.verified:
-    #         return True
-    #     return False
 
     def verify_payment(self):
         self.verified = True
+        self.email
         self.save()
-
