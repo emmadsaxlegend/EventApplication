@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{% for message in messages %}
+          <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
+{% endfor %}
+<div class="container">
+    <div class="d-flex row justify-content-center allign-items-center py-md-5 py-3" style="min-height: 90vh;">
+        <div class="col-12">
+          <h5> Make Payment for: NG {{customer.amount}}</h5>
+          <h5> Make Payment for: NG {{customer.amount_value}}</h5>
+
+          <hr>
+            <script src="https://js.paystack.co/v1/inline.js"></script> 
+            <button class="btn btn-large btn-success" onclick = "payWithPayStack()" id="django-paystack-button">Make Payment</button>
+        </div>
+    </div>
+</div>
+<script>
+    function payWithPayStack(){
+        let currency ="NGN";
+        let plan = "";
+        let ref = "{{customer.ref}}"
+        let obj = {
+            key:'{{paystack_public_key}}',
+            email: '{{customer.email}}',
+            amount: '{{customer.amount_value}}',
+            ref: ref,
+           
+        }
+        if(Boolean(currency)){
+            obj.currency = currency.toUpperCase()
+        }
+        if(Boolean(plan)){
+            obj.plan = plan;
+        }
+        var handler = PaystackPop.setup(obj);
+        handler.openIframe();
+    }
+</script>
+{%endblock%}

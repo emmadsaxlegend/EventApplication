@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from AdminSection.models import Event, Customer
 from django.views.generic import ListView, DetailView
 from django.utils import timezone
@@ -7,7 +7,7 @@ from django.db import models
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.http.request import HttpRequest
 
 
 # Create your views here.
@@ -57,26 +57,40 @@ def register(request,pk):
             email = request.POST["email"]
             phone = request.POST["phone"]
             event_id=poll.id
+            price = poll.price
 
             b = Customer(
                 email=email,
                 phone=phone,
-                event_id = event_id 
+                event_id = event_id,
+                amount = price
             )
             if Customer.objects.filter(email=email, phone=phone, event_id=event_id).exists():
                 messages.error(request, "You have already registered for this event")
-                return redirect("free_events_page")
+                print("You have already registered for this event")
             else:
                 send_mail(subject, message, message_from,[email])
                 b.save()
+                return render(request, 'make_payment.html', {'customer':b, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
+
         
         else :
             return HttpResponse(400,'Invalid vote form')
         poll.save()  
-        return redirect('user_events_page')          
+        return redirect('user_events_page')        
        
     context={
         'poll':poll
     }
 
     return render(request,'vote.html',context)
+
+
+# def verify_payment(request:HttpRequest, ref:str) -> HttpResponse:
+#     payment = get_object_or_404(Customer, ref=ref)
+#     verified = payment.verify_payment()
+#     if verified:
+#         messages.success(request, "Verification successfully")
+#     else:
+#         messages.error(request, "Verification Failled")
+#     return redirect('user_events_page')

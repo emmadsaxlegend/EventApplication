@@ -12,6 +12,20 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 
+from dotenv import load_dotenv
+import environ
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
+# PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+# PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
+
+PAYSTACK_SECRET_KEY = 'sk_test_645277eefa0e9c621e4eaf1b06de642c56dc4375'
+PAYSTACK_PUBLIC_KEY = 'pk_test_7423669631139e962499ac54324490e6ef999137'
+
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
