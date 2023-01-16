@@ -16,10 +16,17 @@ class EventView(ListView):
     model = Event
     template_name = "all-events.html"
 
+class BookView(ListView):
+    model = Customer
+    template_name = "BookingDetails.html"
+
 class EventDetailsView2(DetailView):
     queryset = Event.objects.all()
     template_name = "EventDetails2.html"
 
+class Booking(ListView):
+    queryset = Customer.objects.all()
+    template_name = "BookingDetails.html"
 
 class UserFreeEventView(ListView):
     model = Event
@@ -48,12 +55,9 @@ def register(request,pk):
        
 
         if sel_opt == 'option1' :
-            poll.bookings += 1
-            poll.slot_left = poll.space_capacity - poll.bookings
-            
-            subject = "Event registration"
-            message = "You have registered for event " + str(poll.event_name) + " which will be holding on the " + str(poll.event_date) + " \n Kindly show this message on getting to the venue. Thank You."
-            message_from = "Event XYZ"
+            # poll.bookings += 1
+            # poll.slot_left = poll.space_capacity - poll.bookings
+
             email = request.POST["email"]
             phone = request.POST["phone"]
             event_id=poll.id
@@ -70,18 +74,21 @@ def register(request,pk):
                 event_name = event_name,
                 event_date = event_date
             )
-            if Customer.objects.filter(email=email, event_id=event_id, verified=False).exists():          
-                messages.error(request, "Your payment wasnt successfull for this event")
-                return render(request, 'make_payment.html', {'customer':b, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
 
-                
-            elif Customer.objects.filter(email=email, phone=phone, event_id=event_id).exists():
+            if Customer.objects.filter(email=email, event_id=event_id, verified=True).exists():  
                 messages.error(request, "You have already registered for this event")
-                print("You have already registered for this event")
+
+            elif Customer.objects.filter(email=email, event_id=event_id, verified=False).exists():  
+                messages.error(request, "Your previous payment wasnt successfull for this event")
+                b.save()
+                poll.save()
+                return render(request, 'make_payment.html', {'customer':b, 'event': poll, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
+
             else:
                 #send_mail(subject, message, message_from,[email])
                 b.save()
-                return render(request, 'make_payment.html', {'customer':b, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
+                poll.save()
+                return render(request, 'make_payment.html', {'customer':b, 'event': poll, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
 
         
         else :
@@ -93,21 +100,20 @@ def register(request,pk):
         'poll':poll
     }
 
-    return render(request,'vote.html',context)
+    return render(request,'vote.html', context)
 
 
 def verify_payment(request:HttpRequest, ref:str) -> HttpResponse:
     payment = get_object_or_404(Customer, ref=ref)
     verified = payment.verify_payment()
-
     subject = "Event registration"
     message = "You have registered for event " + str(payment.event_name) + " which will be holding on the " + str(payment.event_date) + " \n Kindly show this message on getting to the venue. Thank You."
     message_from = "Event XYZ"
     
     if not verified:
         send_mail(subject, message, message_from,[payment.email])
-
         messages.success(request, "Payment Received successfully \n Check your email for futher information")
     else:
         messages.error(request, "Verification Failled")
     return redirect('user_events_page')
+

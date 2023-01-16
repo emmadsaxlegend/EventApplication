@@ -8,7 +8,11 @@
     <div class="d-flex row justify-content-center allign-items-center py-md-5 py-3" style="min-height: 90vh;">
         <div class="col-12">
           <h5> Make Payment for: NG {{customer.amount}}</h5>
-          <h5> Make Payment for: NG {{customer.amount_value}}</h5>
+          <h5> For Event:- {{customer.event_name}}</h5>
+          <h5> Happening on the {{customer.event_date}}</h5>
+
+      
+
 
           <hr>
             <script src="https://js.paystack.co/v1/inline.js"></script> 
@@ -28,7 +32,8 @@
             ref: ref,
             callback: function(response){
                 window.location.href = "{%url 'verify-payment' customer.ref%}";
-            } 
+            },
+          
         }
         if(Boolean(currency)){
             obj.currency = currency.toUpperCase()

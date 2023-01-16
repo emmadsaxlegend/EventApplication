@@ -12,8 +12,10 @@
 
     {%if event.price%}
         Price: {{event.price}}<br>
+        
     {%else%}
         Price: Free <br>
+        
     {%endif%}
 
     {%if event.space_capacity%}
@@ -68,5 +70,7 @@
     {%if event.event_end_date%}
             {{event.bookDate}}
     {%endif%}
+
+    <a href="{%url 'book_events_page'%}"> View How how many have registered</a>
 
 {%endblock%}
