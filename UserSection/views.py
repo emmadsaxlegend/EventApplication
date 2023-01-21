@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http.request import HttpRequest
+from django.db.models import Sum
+
 
 
 # Create your views here.
@@ -19,6 +21,10 @@ class EventView(ListView):
 class BookView(ListView):
     model = Customer
     template_name = "BookingDetails.html"
+
+class BookView(ListView):
+    model = Customer
+    template_name = "EventDetails2.html"
 
 class EventDetailsView2(DetailView):
     queryset = Event.objects.all()
@@ -86,8 +92,12 @@ def register(request,pk):
 
             else:
                 #send_mail(subject, message, message_from,[email])
+                poll.bookings += 1
+                poll.slot_left = poll.space_capacity - poll.bookings
                 b.save()
                 poll.save()
+                # print(Customer.objects.filter().get(pk=pk))
+                hello=(Customer.objects.filter(email=email))
                 return render(request, 'make_payment.html', {'customer':b, 'event': poll, 'paystack_public_key':settings.PAYSTACK_PUBLIC_KEY})
 
         
@@ -97,10 +107,10 @@ def register(request,pk):
         return redirect('user_events_page')        
        
     context={
-        'poll':poll
+        'poll':poll,
     }
 
-    return render(request,'vote.html', context)
+    return render(request,'all-events.html', context)
 
 
 def verify_payment(request:HttpRequest, ref:str) -> HttpResponse:

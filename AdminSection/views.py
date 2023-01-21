@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from datetime import datetime, date
-from .models import Event
+from .models import Event, Customer
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
@@ -126,9 +126,15 @@ class DeleteEventView(SuccessMessageMixin, DeleteView):
     success_message = 'Item deleted successfully!!'
 
 def Cancel(request, pk):
-    Event.objects.filter(id=pk).update(is_cancelled="True")
-    messages.success(request, "Event has been Cancelled Successfully")
-    return redirect("free_events_page")
+    poll=Event.objects.get(pk=pk)
+    eventId = poll.bookings
+    if eventId == 0:
+        Event.objects.filter(id=pk).update(is_cancelled="True")
+        messages.success(request, "Event has been Cancelled Successfully")
+        return redirect("free_events_page")
+    else:
+        messages.success(request, "Event cannot be  Cancelled")
+        return redirect("free_events_page")
 
 class CancelledView(ListView):
     model = Event
@@ -140,3 +146,18 @@ def UndoCancel(request, pk):
     return redirect("free_events_page")
 
 
+def view_details(request, pk):
+    poll=Event.objects.get(pk=pk)
+    eventId = poll.id
+    #print(poll.id)
+    
+    paid_candidates = Customer.objects.filter(event_id=eventId, verified=True)
+    reg_candidates = Customer.objects.filter(event_id=eventId)
+    booking = Customer.objects.filter(event_id=eventId, verified=True)
+
+    context={
+        'paid_candidate_count': paid_candidates.count(),
+        'reg_candidate_count': reg_candidates.count(),
+        'candidate': booking,
+    }
+    return render(request, "admin.html", context)

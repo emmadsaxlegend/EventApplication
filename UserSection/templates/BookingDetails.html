@@ -1,3 +1,4 @@
+
 {% for customer in object_list %}
     {%if customer.verified%}
     <ul>
@@ -8,6 +9,8 @@
             {{customer.amount}}<br>
             {{customer.ref}}<br>
             {{customer.event_date}}<br>
+            {{customer.booking}}<br>
+
         </li>
     </ul>
         

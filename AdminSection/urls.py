@@ -23,6 +23,9 @@ urlpatterns = [
     path('event/cancelled-event', CancelledView.as_view(), name= "cancelled_event_page" ),
     path('event/<int:pk>/uncancel', views.UndoCancel, name= "uncancel_event" ),
 
+    path("admin-candidate/<int:pk>", views.view_details, name="candidate"),
+
+
 
 
 

@@ -33,6 +33,7 @@
             callback: function(response){
                 window.location.href = "{%url 'verify-payment' customer.ref%}";
             },
+           
           
         }
         if(Boolean(currency)){
@@ -44,5 +45,6 @@
         var handler = PaystackPop.setup(obj);
         handler.openIframe();
     }
+   
 </script>
 {%endblock%}

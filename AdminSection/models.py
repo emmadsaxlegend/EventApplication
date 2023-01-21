@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime, date
 import secrets
+from django.db.models import Sum
 
 
 
@@ -58,11 +59,14 @@ class Event(models.Model):
         else:
             return "No more registration"
     
+    def bookinga(self):
+        self.bookings = self.bookings + self.slot_left
+    
 
 
 class Customer(models.Model):
     email = models.CharField(max_length=100)
-    phone = models.IntegerField()    
+    phone = models.IntegerField()
     event_id = models.CharField(max_length=100)
     ref = models.CharField(max_length=200,  null=True,)
     verified = models.BooleanField(default=False)
@@ -72,13 +76,16 @@ class Customer(models.Model):
     event_date = models.DateTimeField(null=True, blank=True)
 
 
+    def __str__(self):
+        return str(self.verified)
+
 
 
     class Meta:
         ordering = ()
     
-    def __str__(self) -> str:
-        return f"Payment: {self.amount}"
+    # def __str__(self) -> str:
+    #     return f"Payment: {self.amount}"
     
     def save(self, *args, **kwargs) -> None:
         while not self.ref:
@@ -97,3 +104,8 @@ class Customer(models.Model):
         self.verified = True
         self.email
         self.save()
+    
+
+    # def booking(self):
+    #     total_it = Customer.objects.filter(ev=True).aggregate(Sum("amount"))
+    #     return total_it

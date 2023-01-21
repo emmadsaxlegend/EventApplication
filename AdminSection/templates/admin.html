@@ -1,0 +1,19 @@
+Fully Paid{{paid_candidate_count}}<br>
+Attempted Registration{{reg_candidate_count}}
+
+
+<ul>
+{% for candidates in candidate %}
+    <li>
+    {{candidates.email}}<br>
+    {{candidates.event_id}}<br>
+    {{candidates.phone}}<br>
+    {{candidates.event_name}}<br>
+    {{candidates.amount}}<br>
+    {{candidates.ref}}<br>
+    {{candidates.verified}}<br>
+    </li>
+
+
+{%endfor%}
+</ul>

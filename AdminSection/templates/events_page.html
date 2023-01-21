@@ -59,7 +59,9 @@
         {%if event.is_cancelled == 1%}
             <span style= "color:red"> Event has been cancelled</span>
         {%endif%}
-            
+
+        <a href="{%url 'candidate' event.pk%}" > View Dashboard </a>
+
     </li>
     <hr>
     {%endif%}
