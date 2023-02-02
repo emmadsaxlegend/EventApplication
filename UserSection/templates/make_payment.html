@@ -1,50 +1,120 @@
-{%extends 'base.html'%}
+<!DOCTYPE html>
+{% load static %}
 
-{%block content%}
-{% for message in messages %}
-          <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
-{% endfor %}
-<div class="container">
-    <div class="d-flex row justify-content-center allign-items-center py-md-5 py-3" style="min-height: 90vh;">
-        <div class="col-12">
-          <h5> Make Payment for: NG {{customer.amount}}</h5>
-          <h5> For Event:- {{customer.event_name}}</h5>
-          <h5> Happening on the {{customer.event_date}}</h5>
+<html lang="en">
 
-      
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment details page</title>
+
+    <link rel="stylesheet" href="{%static '/css/paymentDetails.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
 
-          <hr>
-            <script src="https://js.paystack.co/v1/inline.js"></script> 
-            <button class="btn btn-large btn-success" onclick = "payWithPayStack()" id="django-paystack-button">Make Payment</button>
-        </div>
-    </div>
-</div>
-<script>
-    function payWithPayStack(){
-        let currency ="NGN";
-        let plan = "";
-        let ref = "{{customer.ref}}"
-        let obj = {
-            key:'{{paystack_public_key}}',
-            email: '{{customer.email}}',
-            amount: '{{customer.amount_value}}',
-            ref: ref,
-            callback: function(response){
-                window.location.href = "{%url 'verify-payment' customer.ref%}";
-            },
-           
-          
+</head>
+
+<body>
+    {% for message in messages %}
+    <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
+    {% endfor %}
+    <main>
+        <article>
+
+            <section class="section product" aria-label="product">
+                <div class="container">
+
+                    <div class="product-slides">
+
+                        <div class="slider-banner" data-slider>
+                            <figure class="product-banner">
+                                <img src="{{event.header_images.url}}" width="600" height="600" loading="lazy"
+                                    alt="Nike Sneaker" class="img-cover">
+                            </figure>
+                        </div>
+
+                    </div>
+
+                    <div class="product-content">
+
+                        <h1 class="h1 product-title">{{customer.event_name}} </h1>
+
+                        <div class="wrapper">
+                            <span class="price" data-total-price>Email: </span>
+                            <span class="badge">{{customer.email}} </span>
+                        </div>
+            
+
+                        <div class="wrapper">
+                            <span class="price" data-total-price> Phone </span>
+                            <span class="badge">{{customer.phone}}</span>
+                        </div>
+
+            
+                    </div>
+
+                    <div class="myform">
+                        <h2>Make Payments for {{customer.event_name}} Event</h2>
+                        <div class="wrapper">
+                            <span class="price" data-total-price> Holding on   </span>
+                            <span class="badge">{{customer.event_date}}</span>
+                        </div>
+              
+                        <div class="test">
+                            <script src="https://js.paystack.co/v1/inline.js"></script> 
+                            <button class="cart-btn"  onclick = "payWithPayStack()" id="django-paystack-button">
+                                <span class="span">Pay: N{{customer.amount}}</span>
+                            </button>
+
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </article>
+    </main>
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        function payWithPayStack(){
+            let currency ="NGN";
+            let plan = "";
+            let ref = "{{customer.ref}}"
+            let obj = {
+                key:'{{paystack_public_key}}',
+                email: '{{customer.email}}',
+                amount: '{{customer.amount_value}}',
+                ref: ref,
+                callback: function(response){
+                    window.location.href = "{%url 'verify-payment' customer.ref%}";
+                },
+               
+              
+            }
+            if(Boolean(currency)){
+                obj.currency = currency.toUpperCase()
+            }
+            if(Boolean(plan)){
+                obj.plan = plan;
+            }
+            var handler = PaystackPop.setup(obj);
+            handler.openIframe();
         }
-        if(Boolean(currency)){
-            obj.currency = currency.toUpperCase()
-        }
-        if(Boolean(plan)){
-            obj.plan = plan;
-        }
-        var handler = PaystackPop.setup(obj);
-        handler.openIframe();
-    }
-   
-</script>
-{%endblock%}
+       
+    </script>
+    
+
+</body>
+
+</html>

@@ -1,7 +1,365 @@
-{%extends 'base.html' %}
-{% block content%}
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product detail page</title>
+
+  <link rel="stylesheet" href="{% static '/css/details_style.css' %}">
 
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/3b31762e2b.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <nav>
+    <div class="containers nav-wrapper">
+        <div class="brand">
+          <a href="{%url 'user_events_page' %}">
+            <img src="{% static 'image/logoe.PNG' %}" width="50">
+          </a>
+
+            <a href="{%url 'user_events_page' %}">
+
+            <span><strong style="color:white">Event XYZ</strong></span>
+          </a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-list">
+            
+            <li>
+                <a href="#">Services</a>
+               
+                <ul class="dropdown-list">
+                    <li><a href="#">SEO optimisation</a></li>
+                    <li><a href="#">Digital marketing</a></li>
+                    <li><a href="#">Web development</a></li>
+                    <li><a href="#">Web design</a></li>
+                    <li><a href="#">Software development</a></li>
+                    <li><a href="#">Branding</a></li>
+                    <li><a href="#">Content writing</a></li>
+                </ul>
+            </li>
+
+            {%if not  user.is_superuser %}
+            <li>
+                <a href="#">Admin</a>
+                <form class = "login-form" action= "{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                <ul class="form">
+                    <li><h3 style="color:black">Enter Login Details</h3></li>
+                    <li><input class="box" type="text" required onkeyup="this.setAttribute('value', this.value);" name="username" placeholder="Username" value=""></li>
+                    <li><input class="box" type="password" required onkeyup="this.setAttribute('value', this.value);" name="password" placeholder="Password" value=""></li>
+                    <li><input type="submit" name="sign-in" value="Log In" class="btn"></li>
+                </ul>
+            </form>
+
+            </li>
+            {%else%}
+            <li>
+                <a href="#">Hello {{user}}</a>
+                <ul class="dropdown-list">
+                    <li><input type="submit" name="log-out" value="Log Out" class="btn"></li><br>
+                    <li><a href="{%url 'admin_events_page' %}">View Admin Dashboard</a></li>
+                </ul>
+            </form>
+
+            </li>
+            {%endif%}
+           
+        </ul>
+    </div>
+</nav>
+<script src="{% static '/js/script.js' %}"></script>
+    
+
+  <main>
+    <a href="{% url 'user_events_page' %}"
+    <button> <i class="fa fa-arrow-left">Back</i> </button>
+  </a>
+    <article>
+
+      <section class="section product" aria-label="product">
+        <div class="container">
+
+          <div class="product-slides">
+                <div class="slider-banner" data-slider>
+                  <div class="product-banner">
+                    <img src = "{{event.header_images.url}}" width=400 height = 400 >
+                  </div>
+                </div>
+          </div>
+
+          <div class="product-content">
+            <div class="pcontent">
+
+              <p>Event Location <span class="product-subtitle">{{event.location}}</span></p>
+
+              <h1 class="h1 product-title">{{event.event_name}}  </h1>
+
+              <p class="product-text">
+                {{event.description}}
+              </p>
+
+            {%if event.price%}
+            <div class="wrapper">
+
+              <span class="price" data-total-price>Event Fee: N{{event.price}}</span>
+
+            </div>
+            {%endif%}
+            {%if event.space_capacity%}
+            <div class="wrapper">
+              <span class="price" data-total-price>Space Capacity: </span>
+              <span class="badge">{{event.space_capacity}}</span>
+            </div>
+            {%endif%}
+
+            <div class="wrapper">
+              {%if event.space_capacity%}
+                {%if event.bookings == 0%}
+                <span class="badge">{{event.bookings}}</span>
+                <span class="price" data-total-price>Nobody has Registered: </span>
+                {%elif event.bookings == 1%}
+                <span class="badge">{{event.bookings}}</span>
+                <span class="price" data-total-price>Person have Registered: </span>
+                {%else%}
+              <span class="badge">{{event.bookings}}</span>
+              <span class="price" data-total-price>People have Registered: </span>
+              {%endif%}
+              
+              
+              {%if event.slot_left == 0%}
+              <span class="del" style="color:red">Slot Left: {{event.space_capacity}}</span>
+              {%else%}
+              <span class="del" style="color:red">Slot Left: {{event.slot_left}}</span>
+              {%endif%}
+              {%endif%}
+
+
+            </div>
+
+            <div class="wrapper">
+              <span class="price" data-total-price>Date: </span>
+              <span class="badge">{{event.event_date}}</span>
+            </div>
+
+            <div class="wrapper">
+              <span class="price" data-total-price>Register Before: </span>
+              <span class="badge">{{event.event_end_date}}</span>
+            </div>
+
+
+            <div class="wrapper">
+              <span class="price" data-total-price> Time </span>
+              <span class="badge">{{event.event_time}} </span>
+            </div>
+
+            {%if event.event_end_date%}
+            <div class="wrapper">
+              <span class="price" data-total-price>Registration closes in : </span>
+              <span class="del" style="color:red">{{event.bookDate}} </span>
+            </div>
+            {%endif%}
+
+
+
+            {%if event.expired_event%}
+            <span style= "color:red"> EVENT HAS EXPIRED </span>
+            {%else%}
+                <span class="badge"> Event Upcoming</span>
+
+            {%endif%}
+
+    
+            {%if not event.price%}
+
+            <form action="{% url 'register_free' event.pk %}" method="post" class="myform">
+              {% csrf_token %}
+
+                {%if not event.expired_event%}
+
+                <h2>Register for this Free Events</h2>
+                <div class="">
+                    <label class="">Email address</label>
+                    <input type="email" class="input" id="" aria-describedby="emailHelp" required onkeyup="this.setAttribute('value', this.value);" name="email"  placeholder="example@gmail.com" value="">
+                </div>
+                <div class="">
+                    <label class="">Phone Number</label>
+                    <input type="number" class="input" id="" required onkeyup="this.setAttribute('value', this.value);" name="phone" placeholder="Phone Number" value="">
+                </div>
+                <div class="">
+                    <input type="checkbox" name="poll" id="exampleRadios1" value="option1" required>
+                    <label class="form-check-label" for="exampleRadios1">I have Read Terms and Conditions</label>
+                </div>
+
+                <div class="">
+                    <input type="checkbox" name="event_id" id="exampleRadios12" value="option2" required>
+                    <label class="form-check-label" for="exampleRadios1">I agree to abide to rules and regulations of the event</label>
+                </div>
+
+                <div>
+                <button type = "submit" class="cart-btn">
+                    
+                    <span class="span">Register</span>
+
+                </button>
+                </div>
+                {%else%}
+                <h2>Registeration has ended</h2>
+
+                {%endif%}
+            </form>
+            {%else%}
+            <form action="{% url 'vote' event.pk %}" method="post" class="myform">
+                        {% csrf_token %}
+
+                {%if not event.expired_reg%}
+
+                <h2>Register for this Paid Event</h2>
+                <div class="">
+                    <label class="">Email address</label>
+                    <input type="email" class="input" id="" aria-describedby="emailHelp" required onkeyup="this.setAttribute('value', this.value);" name="email"  placeholder="example@gmail.com" value="">
+                </div>
+                <div class="">
+                    <label class="">Phone Number</label>
+                    <input type="number" class="input" id="" required onkeyup="this.setAttribute('value', this.value);" name="phone" placeholder="Phone Number" value="">
+                </div>
+                <div class="">
+                    <input type="checkbox" name="poll" id="exampleRadios1" value="option1" required>
+                    <label class="form-check-label" for="exampleRadios1">I agree to abide to rules and regulations of the event</label>
+                </div>
+    
+                <div class="">
+                    <input type="checkbox" name="event_id" id="exampleRadios12" value="option2" required>
+                    <label class="form-check-label" for="exampleRadios1">I agree that fees are non refundable</label>
+                </div>
+    
+                <div>
+                <button type = "submit" class="cart-btn">
+                    
+                    <span class="span">Register</span>
+
+                </button>
+                </div>
+                {%else%}
+                <h2>Registeration has ended</h2>
+
+                {%endif%}
+            </form>
+
+            {%endif%}
+              
+          </div>
+          </div>
+
+
+        </div>
+       
+      </section>
+
+      
+    </article>
+  </main>
+
+  <div class="footer" id="footer">
+
+    <div class="box-container">
+
+        <div class="box">
+            <div class="content">
+                <div class="footer-left">
+
+                    <h4>Emma<span>Developer</span></h4>
+
+                    <p class="footer-links">
+                        <a href="#">Home</a>
+                        |
+                        <a href="#">About</a>
+                        |
+                        <a href="#">Contact</a>
+                        |
+                        <a href="#">Blog</a>
+                    </p>
+
+                    <p class="footer-company-name">Copyright © 2021 <strong>EmmaDeveloper</strong> All rights reserved</p>
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="content">
+                <div class="footer-center">
+                    <div>
+                        <i class="fa fa-map-marker"></i>
+                        <p><span>Nigeria</span> Lagos</p>
+                    </div>
+        
+                    <div>
+                        <i class="fa fa-phone"></i>
+                        <p>+23480-3781-9461</p>
+                    </div>
+                    <div>
+                        <i class="fa fa-envelope"></i>
+                        <p><a href="mailto:eokereke47@gmail.com">eokereke47@gmail.com</a></p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="content">
+                <div class="right">
+
+                <p class="footer-company-about">
+                    <span>About the company</span>
+                    <strong>Event XYZ</strong> is an Event booking channel where you can find fun  Events 
+                      all around Nigeria.
+                </p>
+                <div class="footer-icons">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                </div>
+            </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
+
+
+{% comment %} 
 <h1> Event Detail </h1>
 {%if event.header_images%}
     <img src = "{{event.header_images.url}}" width=400 height = 400><br>
@@ -14,7 +372,7 @@
         Price: {{event.price}}<br>
         
     {%else%}
-        Price: Free <br>
+        Price: Free 
         
     {%endif%}
 
@@ -23,7 +381,11 @@
 
     {{event.bookings}} People Registered<br>
 
-    {{event.slot_left}} Slot left<br>
+    {%if event.slot_left == 0%}
+        <span class="del">Slot Left: {{event.space_capacity}}</span>
+    {%else%}
+        <span class="del">Slot Left: {{event.slot_left}}</span>
+    {%endif%}
     {%endif%}
 
     Event Date: {{event.event_date}} <br>
@@ -69,8 +431,4 @@
 
     {%if event.event_end_date%}
             {{event.bookDate}}
-    {%endif%}
-
-    <a href="{%url 'candidate' event.pk%}" > View Dashboard </a>
-
-{%endblock%}
+    {%endif%} {% endcomment %}

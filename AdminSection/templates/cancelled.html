@@ -1,54 +1,101 @@
 {%extends 'base.html' %}
+{% load static %}
 
 {% block content%}
-<h1>Cancelled Events Page </h1>
+<div class="record-header">    
+    
 
-<a href="{%url 'dashboard'%}" > Back </a> <br>
-<a href="{%url 'paid-event-page'%}" > View Paid Event </a>
-<a href="{%url 'free-event-page'%}" > View Free Event </a>
+    <div class="browse">
+       <input type="search" placeholder="Search" class="record-search">
+        <select name="" id="">
+            <option value="">All Events</option>
+            <option value="">Paid Events</option>
+            <option value="">Free Events</option>
+        </select>
+    </div>
+</div>
 
-
-<br>
-{% for message in messages %}
-          <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
-{% endfor %}
-<br>
-<ul>
+<table width="100%">
+    <thead>
+        <tr>
+            <th>EVENT ID</th>
+            <th><span class="las la-sort"></span> NAME / LOCATION</th>
+            <th><span class="las la-sort"></span> FEE</th>
+            <th><span class="las la-sort"></span> EVENT DATE</th>
+            <th><span class="las la-sort"></span> Registration</th>
+            <th><span class="las la-sort"></span> Capacity</th>
+            <th><span class="las la-sort"></span> ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for event in object_list %}
         {%if event.is_cancelled == 1%}
 
-            <li>
-                {%if user.is_superuser%}
-                    {%if event.expired_event%}
-                        Cannot Edit 
-                    {%else%}
-                    <a href="{% url 'update_event' event.pk%}">Edit </a>
-                    {%endif%}
-                    <a href="{% url 'delete_event' event.pk%}"> Delete Event </a>
-                    <a href="{% url 'uncancel_event' event.pk%}"> Undo Event </a> <br>
-                {%endif%}
-                    <a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
-                    Description: {{event.description}}<br>
-                    Location: {{event.location}} <br>
 
+        <tr data-href="{% url 'admin_details_page' event.pk%}"> 
+            <td> <a href="/admin/all-customers.html">{{event.id}} </a> </td>
+            <td>
+                <div class="client">
+                    <div class="client-img bg-img" style="background-image: url({% static 'img/3.jpeg' %})"></div>
+
+                    <div class="client-info">
+                        <h4>{{event.event_name}}</h4>
+                        <small>{{event.location}}</small>
+                    </div>
+                </div>
+            </td>
+            <td>
                 {%if event.price%}
-                    Price: {{event.price}}<br>
+                    <span style="color: red;">N{{event.price}}</span>
+                {%else%}
+                    <span style="color: green;">Free</span> 
                 {%endif%}
+            </td>
 
+            <td style="color: green;">
+                {{event.event_date}}
+            </td>
+
+            <td style="color: green;">
+                {%if event.expired_event%}
+                    <span style= "color:red"> Ended</span>
+                {%else%}
+                    Ongoing
+                {%endif%}
+    
+            </td>
+            <td>
                 {%if event.space_capacity%}
-                    Space Capacity: {{event.space_capacity}}<br>
+                    {{event.space_capacity}}
+                {%else%}
+                    Unlimited
                 {%endif%}
+            </td>
+            <td>
+                <div class="hello">
+                        {%if user.is_superuser%}
+                            {%if event.expired_event%}
+                            <span class="las la-ban" style="color: rgb(176, 177, 181);"> Edit</span>
+                            {%else%}
+                            <a href="{% url 'update_event' event.pk%}"><span class="las la-edit" style="color: blue;"> Edit </span></a>
+                            {%endif%}
+                                <a href="{% url 'delete_event' event.pk%}"> <span class="las la-trash" style="color: red;">  Delete </span></a>
 
-                    Event Date: {{event.event_date}} <br>
+                            <a href="{% url 'uncancel_event' event.pk%}"> <span class="las la-ban" style="color: red;"> Undo Event</span></a>
 
-                {%if event.event_end_date%}
-                    End of Registration Date: {{event.event_end_date}} 
-                {%endif%}
-        </li>
-    <hr>
-  
-    {%endif%}
+                        {%endif%}
+                
+
+                </div>
+            </td>
+        </tr>
+        {%endif%}
     {% endfor %}
-    </ul>
+
+                          
+
+</tbody>
+</table> 
+
 
 {%endblock%}

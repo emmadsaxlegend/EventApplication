@@ -8,6 +8,8 @@ from .models import Event, Customer
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Sum
+
 
 # Create your views here.
 def home(request):
@@ -22,18 +24,18 @@ def login(request):
         if user is not None and user.is_active:
             auth.login(request, user)
             if user.is_superuser:
-                return redirect("dashboard")
+                return redirect("admin_events_page")
             elif user.is_cashier:
-                return redirect("dashboard")
+                return redirect("admin_events_page")
             else:
                 return redirect("login")
         else:
-            messages.error(request, "Wrong Username or Password")
-            return redirect("home")
+            messages.error(request, "Wrong Admin Details")
+            return redirect("user_events_page")
 
 
 def dashboard(request):
-    return render(request, "home.html")
+    return render(request, "events_page.html")
 
 
 def free(request):
@@ -47,20 +49,23 @@ def create_free_event(request):
     if request.method == "POST" and request.FILES['header_images']:
         event_name = request.POST["event_name"]
         location = request.POST["location"]
+        event_time = request.POST["event_time"]
         description = request.POST["description"]
         event_date = request.POST["event_date"]
         header_images = request.FILES["header_images"]
 
+
         a = Event(
             event_name=event_name,
             location=location,
+            event_time=event_time,
             description=description,
             event_date=event_date,
             header_images=header_images,
         )
         a.save()
         messages.success(request, "Event Registered Successfully")
-        return redirect("dashboard")
+        return redirect("admin_events_page")
 
 def create_paid_event(request):
     if request.method == "POST" and request.FILES['header_images']:
@@ -69,6 +74,7 @@ def create_paid_event(request):
         price = request.POST["price"]
         space_capacity = request.POST["space_capacity"]
         event_end_date = request.POST["event_end_date"]
+        event_time = request.POST["event_time"]
         description = request.POST["description"]
         event_date = request.POST["event_date"]
         header_images = request.FILES["header_images"]
@@ -78,16 +84,16 @@ def create_paid_event(request):
             location=location,
             description=description,
             event_date=event_date,
+            event_time=event_time,
             header_images=header_images,
             event_end_date=event_end_date,
             space_capacity=space_capacity,
             price=price
         )
-
         a.save()
 
         messages.success(request, "Event Registered Successfully")
-        return redirect("dashboard")
+        return redirect("admin_events_page")
 
 
 
@@ -122,7 +128,7 @@ class UpdateEventView(SuccessMessageMixin, UpdateView):
 class DeleteEventView(SuccessMessageMixin, DeleteView):
     model = Event
     template_name = 'delete_post.html'
-    success_url = reverse_lazy('free_events_page')
+    success_url = reverse_lazy('admin_events_page')
     success_message = 'Item deleted successfully!!'
 
 def Cancel(request, pk):
@@ -131,10 +137,10 @@ def Cancel(request, pk):
     if eventId == 0:
         Event.objects.filter(id=pk).update(is_cancelled="True")
         messages.success(request, "Event has been Cancelled Successfully")
-        return redirect("free_events_page")
+        return redirect("admin_events_page")
     else:
-        messages.success(request, "Event cannot be  Cancelled")
-        return redirect("free_events_page")
+        messages.success(request, "Someone has registered and Event cannot be  Cancelled")
+        return redirect("admin_events_page")
 
 class CancelledView(ListView):
     model = Event
@@ -143,21 +149,54 @@ class CancelledView(ListView):
 def UndoCancel(request, pk):
     Event.objects.filter(id=pk).update(is_cancelled="False")
     messages.success(request, "Event has been Restored Successfully")
-    return redirect("free_events_page")
+    return redirect("admin_events_page")
 
 
 def view_details(request, pk):
     poll=Event.objects.get(pk=pk)
     eventId = poll.id
+
+#? Calculating the expected amount of money to be made in that event
+    a = poll.space_capacity 
+    b = poll.price
+    c = int(a) * int(b)
     #print(poll.id)
+
     
     paid_candidates = Customer.objects.filter(event_id=eventId, verified=True)
     reg_candidates = Customer.objects.filter(event_id=eventId)
-    booking = Customer.objects.filter(event_id=eventId, verified=True)
+    booking = Customer.objects.filter(event_id=eventId)
+    total_it = Customer.objects.filter(event_id=eventId, verified=True).aggregate(Sum("amount"))['amount__sum']
+
+
 
     context={
         'paid_candidate_count': paid_candidates.count(),
         'reg_candidate_count': reg_candidates.count(),
         'candidate': booking,
+        'total_it': total_it,
+        'c': c
     }
     return render(request, "admin.html", context)
+
+def view_free_details(request, pk):
+    poll=Event.objects.get(pk=pk)
+    eventId = poll.id
+    
+    paid_candidates = Customer.objects.filter(event_id=eventId, verified=True)
+    reg_candidates = Customer.objects.filter(event_id=eventId)
+    booking = Customer.objects.filter(event_id=eventId)
+    total_it = Customer.objects.filter(event_id=eventId, verified=True).aggregate(Sum("amount"))['amount__sum']
+
+
+
+    context={
+        'paid_candidate_count': paid_candidates.count(),
+        'reg_candidate_count': reg_candidates.count(),
+        'candidate': booking,
+        'total_it': total_it,
+    }
+    return render(request, "admin.html", context)
+
+def edit_paid_event(request):
+    return render(request, "edit-page.html")

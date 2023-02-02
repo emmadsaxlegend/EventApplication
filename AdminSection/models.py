@@ -1,9 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from datetime import datetime, date
+from datetime import datetime, timedelta
 import secrets
-from django.db.models import Sum
 
 
 
@@ -15,7 +14,8 @@ class Event(models.Model):
     price = models.CharField(max_length=100, blank=True, null=True,)
     space_capacity = models.IntegerField(blank=True, null=True,)
     description = models.TextField(max_length=5000, blank=True, null=True,)
-    event_date = models.DateTimeField(null=True, blank=True)
+    event_date = models.DateField(null=True, blank=True)
+    event_time = models.TimeField(null=True, blank=True)
     event_end_date = models.DateTimeField(null=True, blank=True)
     bookings = models.IntegerField(default=0)
     slot_left = models.IntegerField(default=0)
@@ -30,7 +30,7 @@ class Event(models.Model):
         # ------------Return to Details View ---------------
         # return reverse("article-detail", kwargs={"pk": self.pk})
         #-----------Return to Home View-------------
-        return reverse("free_events_page")  
+        return reverse("admin_events_page")  
 
 #----------------in settings.py changed Time-ZONE to "Africa/Lagos" to get the correct time zone ------------
     def expired_reg(self):
@@ -39,13 +39,14 @@ class Event(models.Model):
             return True
 
     def expired_event(self):
-        mydate = timezone.now()
+        mydate = timezone.now().date()
         if mydate > self.event_date:
             return True
     
     def bookDate(self):
         d0 = datetime.now().date()
         d1 = self.event_end_date.date()
+        print(d1)
 
         d2 = d1 - d0
         delta = d2.days
@@ -58,10 +59,11 @@ class Event(models.Model):
             return "You have " + me + "days left to register"
         else:
             return "No more registration"
-    
-    def bookinga(self):
-        self.bookings = self.bookings + self.slot_left
-    
+
+
+
+
+
 
 
 class Customer(models.Model):
@@ -71,7 +73,7 @@ class Customer(models.Model):
     ref = models.CharField(max_length=200,  null=True,)
     verified = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now=True)
-    amount = models.PositiveIntegerField()
+    amount = models.PositiveIntegerField(null=True, blank=True)
     event_name = models.CharField(max_length=100)
     event_date = models.DateTimeField(null=True, blank=True)
 
@@ -105,7 +107,3 @@ class Customer(models.Model):
         self.email
         self.save()
     
-
-    # def booking(self):
-    #     total_it = Customer.objects.filter(ev=True).aggregate(Sum("amount"))
-    #     return total_it

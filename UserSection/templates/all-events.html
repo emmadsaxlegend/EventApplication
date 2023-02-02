@@ -1,59 +1,72 @@
-{%extends 'base.html' %}
+{%extends 'home.html' %}
 
-{% block content%}
-<h1>ALl Events </h1>
-{% for message in messages %}
-          <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
-{% endfor %}
+{%block home%}
+<section class="home" id="home">
 
-<br>
-<ul>
-    {% for event in object_list %}
-      {%if event.is_cancelled == 0%}
+    <div class="content">
+        <h3>fresh and <span>organic</span> products for your</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam libero nostrum veniam facere tempore nisi.</p>
+        <!-- <a href="" class="btn">View Events</a> -->
+    </div>
 
+</section>
+
+<section class="blogs" id="blogs">
+    <div class="myevent">
+
+        <h1 class="heading"> our <span>Events</span> </h1>
+
+        <div class="box-container">
         
-        <li><a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
-            Description: {{event.description}}<br>
-            Location: {{event.location}} <br>
 
-            {%if event.price%}
-                Price: {{event.price}}<br>
-                
-            {%else%}
-                Price: Free <br>
-                
-            {%endif%}
+                {% for event in object_list %}
 
-            {%if event.space_capacity%}
-            Space Capacity: {{event.space_capacity}}<br>
-            {%endif%}
+                <div class="box" > 
+                    <a href="{%url 'free_event_details_page' event.pk%}">
+                        <div class="myimage">
+                            <img src="{{event.header_images.url}}" alt="">
+                        </div>
+                    <div class="content">
+                        <div class="icons">
+                            <p>{{event.event_name}} </p>
+                        </div>
+                        <div class="icons">
+                        <p><i class="fas fa-calendar"></i>Date <i>{{event.event_date}}</i> </p>
+                        </div>
+                        <div class="icons">
+                            <p><i class="fas fa-calendar"></i>Time <i>{{event.event_time}}</i> </p>
+                        </div>
 
-            {%if event.expired_event%}
-                Event Date: <span style= "color:red"> Event Expired</span> <br>
-            {%else%}
-                Event Date: {{event.event_date}} <br>
-            {%endif%}
+                        {%if event.price%}
+                        <div class="icons">
+                            <p><i class="fas fa-money-check"></i>Fee <i>N5000</i> </p>
+                        </div>
+                        {%else%}
+                        <div class="icons">
+                            <p><i class="fas fa-money-check"></i> Fee:- <span style="color: green; font: 1em sans-serif;;">FREE</span> </p>
+                        </div>
+                        {%endif%}
 
-            {%if event.event_end_date%}
-                {%if event.expired_reg%}
-                End of Registration Date: <span style= "color:red"> Registration Ended</span> <br>
-                {%else%}
-                End of Registration Date: {{event.event_end_date}} <br>
-                {%endif%}
-            {%endif%}
-          
-            {%if event.slots%}
-                {{slot_left}} <br>
-            {%endif%}
-
-            COUNTS: {{candidate_count}}
+                        {%if not event.expired_event%}
+                            <h3>View Event Details</h3>
+                        {%else%}
+                            <h3 style="color:orange;" >Event Has EXPIRED</h3>
+                        {%endif%}
+                        
+                    </div>
+                    </a>
+                </div>
+                {%endfor%}
             
-    </li>
-    <hr>
-    {%endif%}
 
-    {% endfor %}
-    </ul>
+        </div>
+    </div>
 
-   
+    <div class="next_btn">
+        <button class="p_btn"><i class="fa fa-arrow-left">Previous Page</i></button> 
+        <button class="n_btn"> <i class="fa fa-arrow-right">Next Page</i></button> 
+
+    </div>
+
+</section>
 {%endblock%}

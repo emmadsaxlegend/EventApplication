@@ -1,33 +1,58 @@
-{%extends 'base.html' %}
 
-{% block content%}
-<h1>Paid Events Page</h1>
+{%extends 'home.html' %}
 
-<a href="{%url 'user_events_page'%}" > Go Back </a> <br>
+{%block home%}
+<section class="blogs" id="blogs">
 
-<br>
-<br>
-<ul>
-    {% for event in object_list %}
+    <h1 class="heading"> Paid <span>Events</span> </h1>
+
+    <div class="box-container">
+        {% for event in object_list %}
         {%if event.price %}
 
-        <li>
-            Event Name <a href="{%url 'free_event_details_page' event.pk%}"> {{event.event_name}}</a> <br/>
-            
-            Description: {{event.description}}<br>
-            
-            Location: {{event.location}} <br>
 
-            Price: {{event.price}}<br>
+        <div class="box" > 
+            <a href="{%url 'free_event_details_page' event.pk%}">
 
-            Space Capacity: {{event.space_capacity}}<br>
+            <img src="{{event.header_images.url}}" alt="">
+            <div class="content">
+                <div class="icons">
+                    <p>{{event.event_name}} </p>
+                </div>
+                <div class="icons">
+                   <p><i class="fas fa-calendar"></i>Date <i>{{event.event_date}}</i> </p>
+                </div>
+                {%if event.price%}
+                <div class="icons">
+                    <p><i class="fas fa-money-check"></i>Fee <i>N5000</i> </p>
+                 </div>
+                 {%else%}
+                 <div class="icons">
+                    <p><i class="fas fa-money-check"></i> Fee:- <span style="color: green; font: 1em sans-serif;;">FREE</span> </p>
+                 </div>
+                 {%endif%}
 
-            Event Date: {{event.event_date}} <br>
+                 {%if not event.expired_event%}
+                    <h3>View Event Details</h3>
+                 {%else%}
+                    <h3 style="color:red;" >Event Has EXPIRED</h3>
+                {%endif%}
+                
+            </div>
+            </a>
+        </div>
+        {%endif%}
+        {%endfor%}
 
-            End of Registration Date: {{event.event_end_date}} 
-    </li>
-    <hr>
-    {%endif%}
-    {% endfor %}
-    </ul>
+    </div>
+
+    <div class="next_btn">
+        <button class="p_btn"><i class="fa fa-arrow-left">Previous Page</i></button> 
+        <button class="n_btn"> <i class="fa fa-arrow-right">Next Page</i></button> 
+
+    </div>
+
+</section>
 {%endblock%}
+
+

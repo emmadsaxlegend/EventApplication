@@ -11,8 +11,8 @@ urlpatterns = [
     path("add_event/", views.create_free_event, name="create_free_event"),
     path("create_event/", views.create_paid_event, name="create_paid_event"),
 
-    path("", EventView.as_view(), name="free_events_page"),
-    path("free-details-url/<int:pk>/", EventDetailsView.as_view(), name="free_event_details_page"),
+    path("", EventView.as_view(), name="admin_events_page"),
+    path("admin-details/<int:pk>/", EventDetailsView.as_view(), name="admin_details_page"),
 
 
     path("paid_event_page/", PaidEventView.as_view(), name="paid-event-page"),
@@ -24,6 +24,9 @@ urlpatterns = [
     path('event/<int:pk>/uncancel', views.UndoCancel, name= "uncancel_event" ),
 
     path("admin-candidate/<int:pk>", views.view_details, name="candidate"),
+    path("free-candidate/<int:pk>", views.view_free_details, name="candidate-free"),
+
+    path("edit_event/", views.edit_paid_event, name="edit_paid_event"),
 
 
 

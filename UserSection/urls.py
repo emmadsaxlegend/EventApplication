@@ -17,6 +17,15 @@ urlpatterns = [
     path("decend-date/", DateDecendView.as_view(), name="order_by_date_decend"),
 
     path('vote/<int:pk>',views.register,name='vote'),
+
+    path('register-free/<int:pk>',views.register_free,name='register_free'),
+
     path('<str:ref>/', views.verify_payment, name="verify-payment"),
+
+    path('<str:ref>/', views.verify_free_payment, name="freebooking"),
+
+
+    path('analytics/', views.view_analytics, name="view_analytics"),
+
 
 ]
