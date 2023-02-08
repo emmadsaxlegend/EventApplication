@@ -2,7 +2,14 @@
 {% block content%}
 {% load static %}
 
+{% for message in messages %}
+        <div class="alert">
+          <div style="text-align: center"><strong>{{message}}</strong></div>
+        </div>
+    {% endfor %}
 
+
+{% if user.is_superuser %}
 
 <div class="records">
                     
@@ -120,5 +127,11 @@
 
 
 </div>
+
+{%else%}
+
+    <div style="color:red;"> You are not an admin. </div>
+
+{% endif %}
 
 {%endblock%}

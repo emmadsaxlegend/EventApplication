@@ -18,6 +18,8 @@ from django.db.models import Sum
 class EventView(ListView):
     model = Event
     template_name = "all-events.html"
+    paginate_by = 8
+
 
 class BookView(ListView):
     model = Customer
@@ -80,6 +82,7 @@ def register_free(request,pk):
             if Customer.objects.filter(email=email, event_id=event_id, verified=True).exists():  
                 messages.error(request, "You have already registered for this event")
 
+
             elif Customer.objects.filter(email=email, event_id=event_id, verified=False).exists():  
                 messages.error(request, "Your previous payment wasnt successfull for this event")
                 b.save()
@@ -134,6 +137,7 @@ def register(request,pk):
 
             if Customer.objects.filter(email=email, event_id=event_id, verified=True).exists():  
                 messages.error(request, "You have already registered for this event")
+            
 
             elif Customer.objects.filter(email=email, event_id=event_id, verified=False).exists():  
                 messages.error(request, "Your previous payment wasnt successfull for this event")

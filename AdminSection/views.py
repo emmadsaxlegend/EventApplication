@@ -9,6 +9,8 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Sum
+from django.contrib.auth import logout
+
 
 
 # Create your views here.
@@ -52,6 +54,7 @@ def create_free_event(request):
         event_time = request.POST["event_time"]
         description = request.POST["description"]
         event_date = request.POST["event_date"]
+        event_end_date = request.POST["event_end_date"]
         header_images = request.FILES["header_images"]
 
 
@@ -61,6 +64,7 @@ def create_free_event(request):
             event_time=event_time,
             description=description,
             event_date=event_date,
+            event_end_date=event_end_date,
             header_images=header_images,
         )
         a.save()
@@ -88,7 +92,8 @@ def create_paid_event(request):
             header_images=header_images,
             event_end_date=event_end_date,
             space_capacity=space_capacity,
-            price=price
+            price=price,
+            slot_left = space_capacity
         )
         a.save()
 
@@ -101,6 +106,8 @@ def create_paid_event(request):
 class EventView(ListView):
     model = Event
     template_name = "events_page.html"
+    paginate_by = 5
+
 
 
 class EventDetailsView(DetailView):
@@ -111,25 +118,43 @@ class EventDetailsView(DetailView):
 class FreeEventView(ListView):
     model = Event
     template_name = "free-event-page.html"
+    paginate_by = 10
+
 
 class PaidEventView(ListView):
     model = Event
     template_name = "paid-event-page.html"
+    paginate_by = 10
+
 
 
 class UpdateEventView(SuccessMessageMixin, UpdateView):
     model = Event
     template_name = 'update-event.html'
     fields = ['event_name', 'location', 'price', 'space_capacity', 'description', 'event_date', 'event_end_date']
-    success_message = 'Item Updated successfully!!'
+    success_message = 'Event Updated successfully!!'
 
+    def form_valid(self, form):
+            event = self.get_object()
+            space_capacity = form.cleaned_data['space_capacity']
+            if space_capacity < event.bookings:
+                messages.error(self.request, "Space capacity cant be less than the number of bookings!!.")
+                form.add_error('space_capacity', 'Space capacity can not be less than bookings')
+                return self.form_invalid(form)
+            return super().form_valid(form)
+
+class UpdateFreeEvent(SuccessMessageMixin, UpdateView):
+    model = Event
+    template_name = 'update-event.html'
+    fields = ['event_name', 'location', 'description', 'event_date', 'event_end_date']
+    success_message = 'Event Updated successfully!!'
 
 
 class DeleteEventView(SuccessMessageMixin, DeleteView):
     model = Event
     template_name = 'delete_post.html'
     success_url = reverse_lazy('admin_events_page')
-    success_message = 'Item deleted successfully!!'
+    success_message = 'Event deleted successfully!!'
 
 def Cancel(request, pk):
     poll=Event.objects.get(pk=pk)
@@ -139,12 +164,14 @@ def Cancel(request, pk):
         messages.success(request, "Event has been Cancelled Successfully")
         return redirect("admin_events_page")
     else:
-        messages.success(request, "Someone has registered and Event cannot be  Cancelled")
+        messages.error(request, "Someone has registered and Event cannot be  Cancelled")
         return redirect("admin_events_page")
 
 class CancelledView(ListView):
     model = Event
     template_name = "cancelled.html"
+    paginate_by = 10
+
 
 def UndoCancel(request, pk):
     Event.objects.filter(id=pk).update(is_cancelled="False")
@@ -200,3 +227,7 @@ def view_free_details(request, pk):
 
 def edit_paid_event(request):
     return render(request, "edit-page.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect("user_events_page")

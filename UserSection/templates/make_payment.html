@@ -14,15 +14,80 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="{% static '/js/script.js' %}"></script>
 
 
 </head>
 
 <body>
-    {% for message in messages %}
-    <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
-    {% endfor %}
+    <nav>
+        <div class="containers nav-wrapper">
+            <div class="brand">
+              <a href="{%url 'user_events_page' %}">
+                <img src="{% static 'image/logoe.PNG' %}" width="50">
+              </a>
+    
+                <a href="{%url 'user_events_page' %}">
+    
+                <span><strong style="color:white">Event XYZ</strong></span>
+              </a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-list">
+                
+                <li>
+                    <a href="#">Services</a>
+                   
+                    <ul class="dropdown-list">
+                        <li><a href="#">SEO optimisation</a></li>
+                        <li><a href="#">Digital marketing</a></li>
+                        <li><a href="#">Web development</a></li>
+                        <li><a href="#">Web design</a></li>
+                        <li><a href="#">Software development</a></li>
+                        <li><a href="#">Branding</a></li>
+                        <li><a href="#">Content writing</a></li>
+                    </ul>
+                </li>
+    
+                {%if not  user.is_superuser %}
+                <li>
+                    <a href="#">Admin</a>
+                    <form class = "login-form" action= "{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                    <ul class="form">
+                        <li><h3 style="color:black">Enter Login Details</h3></li>
+                        <li><input class="box" type="text" required onkeyup="this.setAttribute('value', this.value);" name="username" placeholder="Username" value=""></li>
+                        <li><input class="box" type="password" required onkeyup="this.setAttribute('value', this.value);" name="password" placeholder="Password" value=""></li>
+                        <li><input type="submit" name="sign-in" value="Log In" class="btn"></li>
+                    </ul>
+                </form>
+    
+                </li>
+                {%else%}
+                <li>
+                    <a href="#">Hello {{user}}</a>
+                    <ul class="dropdown-list">
+                        <li><input type="submit" name="log-out" value="Log Out" class="btn"></li><br>
+                        <li><a href="{%url 'admin_events_page' %}">View Admin Dashboard</a></li>
+                    </ul>
+                </form>
+    
+                </li>
+                {%endif%}
+               
+            </ul>
+        </div>
+    </nav>
+        
+    
     <main>
+        {% for message in messages %}
+            <div  style="text-align: center; color:white;"><strong>{{message}}</strong></div>
+        {% endfor %}
         <article>
 
             <section class="section product" aria-label="product">

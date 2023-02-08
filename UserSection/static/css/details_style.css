@@ -132,7 +132,9 @@ main button{
  
 }
 
-
+section{
+  margin: 20px;
+}
 
 
 
@@ -192,7 +194,7 @@ main button{
 }
 
 .nav-wrapper ul.nav-list li a:hover, .nav-wrapper ul.nav-list li.active a {
-  color: var(--primary);
+  color: var(--orange);
 }
 
 .btn {
@@ -270,7 +272,7 @@ nav ul.dropdown-list {
 }
 
 .nav-wrapper ul.dropdown-list  li a {
-  color: var(--orange);
+  color: var(--tgreen);
 } 
 
 .nav-wrapper ul.nav-list li:hover .dropdown-list {
@@ -322,7 +324,7 @@ nav ul.form {
 }
 
 .hamburger {
-  display: none;
+  display: flex;
 }
 
 .mobile .hamburger {
@@ -640,6 +642,7 @@ main a{
 
 .product-slides {
    background: rgba(220, 231, 221, 0.627);
+   /* margin: 20px; */
 }
 
 .slider-banner {

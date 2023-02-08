@@ -1,6 +1,9 @@
 {%extends 'base.html' %}
 
 {%block details%}
+
+{% if user.is_superuser %}
+
 <div class="analytics">
 
     <div class="card">
@@ -56,11 +59,13 @@
     </div>
 
 </div>
+{%endif%}
 {%endblock%}
 
 {% block content%}
 {% load static %}
 
+{% if user.is_superuser %}
 {% for message in messages %}
           <div  style="text-align: center; color:green;"><strong>{{message}}</strong></div>
 {% endfor %}
@@ -142,7 +147,7 @@
                                 {%if event.expired_event%}
                                 <span class="las la-ban" style="color: rgb(176, 177, 181);"> Edit</span>
                                 {%else%}
-                                <a href="{% url 'update_event' event.pk%}"><span class="las la-edit" style="color: blue;"> Edit </span></a>
+                                <a href="{% url 'update_event' event.pk%}"><span class="las la-edit" style="color: #0f4032;"> Edit </span></a>
                                 {%endif%}
                                     <a href="{% url 'delete_event' event.pk%}"> <span class="las la-trash" style="color: red;">  Delete </span></a>
 
@@ -168,9 +173,52 @@
                        
 
     <div class="browse">
-        <button style="margin-right: 10px; color: rgb(192, 196, 196);">Previous</button>                            
+        <section>
+            <ul class="page">
+                {% if is_paginated %}        
+                    {% if page_obj.has_previous%}
+                        <a href="?page=1"><li>&laquo;&laquo;</li></a>
+                        <a href="?page={{ page_obj.previous_page_number }}"><li>&laquo;</li></a>
+                    {% else %}
+                        <a ><li><span>&laquo;</span></li></a>
+                      
+                    {% endif %}
 
-        <button style="color: green;">Next</button>                            
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <a class="active"><li>{{ i }}</li></a>
+                            {% elif i > page_obj.number and i < page_obj.number|add:5 %}
+                            <a href="?page={{ i }}"><li>{{ i }}</li></a>
+                            
+                        {% endif %}
+                    {% endfor %}
+                   
+
+                    {% if page_obj.has_next %}
+                        <li>.....</li>
+
+                        <a href="?page={{ page_obj.paginator.num_pages }}"><li>{{ page_obj.paginator.num_pages }}</li></a>
+                        <a href="?page={{ page_obj.next_page_number }}"><li>&raquo;</li></a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}"><li>&raquo;&raquo;</li></a>
+
+                    {%endif%}
+                {%else%}
+                    <a ><li><span>&laquo;</span></li></a>       
+                    <a ><li><span>&raquo;</span></li></a>
+
+                
+                {% endif %}
+            </ul>
+        </section>
+
+                
     </div>
 </div>
+
+{%else%}
+
+    <div style="color:red;"> You are not an admin. </div>
+
+{% endif %}
+</div> 
 {%endblock%}

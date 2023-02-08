@@ -30,7 +30,6 @@
     transition: all .2s linear;
 
     /* For navbar */
-    -webkit-font-smoothing: antialiased;
 
 }
 
@@ -50,6 +49,44 @@ body{
 section{
     padding:2rem 9%;
 }
+
+
+/* Success Alert Message */
+.success {
+    animation: autoHide 0s ease-in 5s forwards;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+
+}
+
+@keyframes autoHide {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+    }
+
+
+.error {
+    animation: autoHide 0s ease-in 5s forwards;
+    /* background: #efc0c0; */
+    color: red;
+    text-align: center;
+    font-size: 20px;
+
+}
+
+@keyframes autoHide {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+    }
+
+
 
 .heading{
     text-align: center;
@@ -74,8 +111,8 @@ section{
     width: 100%;
     margin: 0 auto;
     background: #0f4032;
-    position: fixed;
-    z-index: 9999;
+    /* position: fixed;
+    z-index: 9999; */
 
 }
 .container .brand{
@@ -114,7 +151,9 @@ section{
 }
 .nav-wrapper ul.nav-list li {
     margin-left: 30px;
-    padding: 20px 0;
+    margin-right: 30px;
+
+    padding: 20px 0px;
     position: relative;
 }
 
@@ -134,12 +173,13 @@ section{
     background: var(--tgreen);
     color: var(--pure);
     outline: none;
-    padding: 8px 20px;
-    font-size: 14px;
+    padding: 4px 12px;
+    font-size: 10px;
     cursor: pointer;
     letter-spacing: 1px;
     border: 1px solid transparent;
     transition: all .5s ease-in-out;
+    border-radius: 15px;
 }
 
 .btn:hover {
@@ -474,26 +514,55 @@ nav ul.form {
     padding:.5rem 0;
 }
 
-.next_btn{
-    padding:6rem;
-}
-.next_btn .n_btn{
-    color: #186124;
-}
-.next_btn .p_btn{
-    color: #7e7a7a;
-    margin-right: 10px;
 
-    margin-top: 1rem;
-    display: inline-block;
-    padding:.8rem 3rem;
-    font-size: 1.7rem;
-    border-radius: .5rem;
-    border:.2rem solid var(--black);
-    color:var(--black);
-    cursor: pointer;
-    background: none;
+/* Pagination section */
+
+.browse {
+    display: flex;
+    margin: 20px;
 }
+
+.browse .page{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    background-color: var(--tgreen);
+
+}
+
+.browse .page li {
+    margin: 0.25rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    color: #ededed;
+}
+
+.browse .page a li {
+    background: #0f4032;
+    border: 1px solid #303030;
+}
+.browse .page a li span{
+    color: rgb(106, 105, 105);
+
+}
+
+.browse .page a:hover li{
+    border-color: white;
+    color: #eeeec0;
+}
+
+.browse .page a.active li {
+    background-color: var(--text-grey);
+    color: white;
+    border-color: #eeeec0;
+    font-weight: 300;
+    box-shadow: 0 0.5rem 1rem #ff52f136;
+}
+/* End of pagination section */
+
 
 
 
@@ -566,6 +635,8 @@ nav ul.form {
     }
 
 }
+
+
 
 
 /* Footer Section */

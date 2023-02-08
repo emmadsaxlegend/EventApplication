@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-    --main-color: #22BAA0;
-    --color-dark: #34425A;
+    --main-color: #477b78;;
+    --color-dark: #0f4032;;
     --text-grey: #B0B0B0;
+    --tgreen:#477b78;
 }
 
 * {
@@ -18,6 +19,43 @@
 #menu-toggle {
     display: none;
 }
+
+
+
+
+    /* Success Alert Message */
+    .success {
+        animation: autoHide 0s ease-in 4s forwards;
+        color: green;
+        text-align: center;
+
+    }
+  
+    @keyframes autoHide {
+        to {
+            width:0;
+            height:0;
+            overflow:hidden;
+        }
+      }
+
+    
+      .error {
+        animation: autoHide 0s ease-in 3s forwards;
+        /* background: #efc0c0; */
+        color: red;
+        text-align: center;
+    }
+  
+    @keyframes autoHide {
+        to {
+            width:0;
+            height:0;
+            overflow:hidden;
+        }
+      }
+
+
 
 .sidebar {
     position: fixed;
@@ -68,13 +106,13 @@
  
 /* Handle */
 .side-content::-webkit-scrollbar-thumb {
-  background: #b0b0b0; 
+  background: #9cb8a3; 
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .side-content::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: #eeeec0; 
 }
 
 .profile {
@@ -103,12 +141,8 @@
 }
 
 .profile small {
-    color: #899DC1;
+    color: #fff;
     font-weight: 600;
-}
-
-.sidebar {
-    /*overflow-y: auto;*/
 }
 
 .side-menu ul {
@@ -121,7 +155,7 @@
 }
 
 .side-menu a.active {
-    background: #2B384E;
+    background: var(--tgreen);
 }
 
 .side-menu a.active span, .side-menu a.active small {
@@ -135,7 +169,7 @@
 }
 
 .side-menu a span, .side-menu a small {
-    color: #899DC1;
+    color: #fff;
 }
 
 #menu-toggle:checked ~ .sidebar {
@@ -179,7 +213,7 @@ header {
     z-index: 100;
     height: 60px;
     box-shadow: 0px 5px 5px -5px rgb(0 0 0 /10%);
-    background: #fff;
+    background: var(--tgreen);
     transition: left 300ms;
 }
 
@@ -219,7 +253,7 @@ header {
 
 .notify-icon span:last-child {
     position: absolute;
-    background: var(--main-color);
+    background: var(--color-dark);
     height: 16px;
     width: 16px;
     display: flex;
@@ -248,6 +282,7 @@ header {
     display: inline-block;
     margin-left: .3rem;
     font-size: .8rem;
+    color: #fff;
 }
 
 main {
@@ -256,17 +291,17 @@ main {
 
 .page-header {
     padding: 1.3rem 1rem;
-    background: #E9edf2;
+    background: var(--color-dark);
     border-bottom: 1px solid #dee2e8;
 }
 
 .page-header h1, .page-header small {
-    color: #74767d;
+    color: #fff;
 }
 
 .page-content {
     padding: 1.3rem 1rem;
-    background: #f1f4f9;
+    background: var(--tgreen);
 }
 
 .analytics {
@@ -279,7 +314,7 @@ main {
 
 .card {
     box-shadow: 0px 5px 5px -5px rgb(0 0 0 / 10%);
-    background: #fff;
+    background: var(--color-dark);
     padding: 1rem;
     border-radius: 3px;
 }
@@ -291,18 +326,18 @@ main {
 }
 
 .card-head h2 {
-    color: #333;
+    color: #fff;
     font-size: 1.8rem;
     font-weight: 500;
 }
 
 .card-head span {
     font-size: 3.2rem;
-    color: var(--text-grey);
+    color: #fff;
 }
 
 .card-progress small {
-    color: #777;
+    color: #fff;
     font-size: .8rem;
     font-weight: 600;
 }
@@ -338,7 +373,7 @@ main {
 
 .records {
     box-shadow: 0px 5px 5px -5px rgb(0 0 0 / 10%);
-    background: #fff;
+    background: #ffffff;
     border-radius: 3px;
 }
 
@@ -394,6 +429,56 @@ input, button, select {
     width: 100px;
 }
 
+/* Pagination section */
+
+.browse section{
+    display: flex;
+}
+
+.browse section .page{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--tgreen);
+
+}
+
+.browse section .page li {
+    margin: 0.25rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    color: #ededed;
+}
+
+.browse section .page a li {
+    background-color: var(--color-dark);
+    border: 1px solid #303030;
+}
+.browse section .page a li span{
+    color: rgb(106, 105, 105);
+
+}
+
+.browse section .page a:hover li{
+    border-color: white;
+    color: #eeeec0;
+}
+
+.browse section .page a.active li {
+    background-color: var(--text-grey);
+    color: white;
+    border-color: #eeeec0;
+    font-weight: 300;
+    box-shadow: 0 0.5rem 1rem #ff52f136;
+}
+/* End of pagination section */
+
+
+
+
 .table-responsive {
     width: 100%;
     overflow: auto;
@@ -408,7 +493,7 @@ table thead tr {
 }
 
 table tbody tr:hover{
-    background: #e2ebf6;
+    background: #e9edf2;
 }
 
 table thead th {
@@ -554,6 +639,7 @@ table tbody tr {
         width: 900px;
     }
 }
+
 
 
 

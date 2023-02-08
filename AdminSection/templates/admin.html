@@ -1,6 +1,8 @@
 {%extends 'base.html' %}
 
 {%block details%}
+{% if user.is_superuser %}
+
 <div class="analytics">
 
     <div class="card">
@@ -61,10 +63,15 @@
 
 
 </div>
+
+{% endif %}
 {%endblock%}
 
 
+
 {% block content%}
+
+{% if user.is_superuser %}
 
 <div class="record-header">
                        
@@ -95,10 +102,13 @@
             {% for candidates in candidate %}
 
             <tr>
-                <td style="font-size: 8px; max-width: 200px;" > {{candidates.ref}}</td>
+                <td style="font-size: 8px; max-width: 270px;" > 
+                    <div style="padding: 10px;" >
+                        {{candidates.ref}}
+                    </div>
+                </td>
                 <td>
                     <div class="client">
-                       <div class="client-img bg-img" style="background-image: url(img/3.jpeg)"></div>
                         <div class="client-info" style="max-width: 10px;">
                             <h4>    {{candidates.phone}} </h4>
                             <small> {{candidates.email}} </small>
@@ -137,5 +147,34 @@
 
     </table>
 </div>
+
+{%else%}
+
+    <div style="color:red;"> You are not an admin. </div>
+
+{% endif %}
+
+{% if is_paginated %}
+<ul>
+  {% if page_obj.has_previous %}
+    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li><span>&laquo;</span></li>
+  {% endif %}
+  {% for i in paginator.page_range %}
+  {% if page_obj.number == i %}
+      <li><span>{{ i }} <span>(current)</span></span></li>
+  {% else %}
+      <li><a href="?page={{ i }}">{{ i }}</a></li>
+  {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+  {% else %}
+      <li><span>&raquo;</span></li>
+  {% endif %}
+</ul>
+{% endif %}
+</div> 
 
 {%endblock%}

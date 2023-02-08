@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/event-details.css' %}">
     <link rel="stylesheet" href="{% static 'css/add.css' %}">
 
+    <script src="{% static 'toastr/toastr.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'toastr/toastr.min.css' %} ">
+
 
 
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -30,40 +33,50 @@
         
         <div class="side-content">
             <div class="profile">
-                <div class="profile-img bg-img" style="background-image: url({% static 'img/3.jpeg' %})"></div>
-                <h4>Okereke Static</h4>
+                <div class="profile-img bg-img"> 
+                    <div class= "las la-user" style="font-size:60px"></div>
+                </div>
+                <h4>{{user}}</h4>
+                {%if user.is_superuser%}
                 <small>Admin</small>
+                {%endif%}
             </div>
 
             <div class="side-menu">
                 <ul>
                     <li>
-                      <a href = {% url 'admin_events_page'%} class='active'>                            <span class="las la-tachometer-alt"></span>
+                      <a href = {% url 'admin_events_page'%} class='active'>
+                            <span class="las la-tachometer-alt"></span>
                             <small>Dashboard</small>
                         </a>
                     </li>
                     <li>
-                      <a href = {% url 'paid_event'%}>                            <span class="las la-plus-circle"></span>
+                      <a href = {% url 'paid_event'%}> 
+                            <span class="las la-plus-circle"></span>
                             <small> Create Paid Event</small>
                         </a>
                     </li>
                     <li>
-                      <a href = {% url 'free_event'%}>                             <span class="las la-plus-circle"></span>
+                      <a href = {% url 'free_event'%}>                             
+                             <span class="las la-plus-circle"></span>
                              <small> Create Free Event</small>
                          </a>
                      </li>
                     <li>
-                      <a href = {% url 'paid-event-page'%}>                             <span class="las la-eye"></span>
+                      <a href = {% url 'paid-event-page'%}>                             
+                            <span class="las la-eye"></span>
                             <small>View Paid Events</small>
                         </a>
                     </li>
                     <li>
-                      <a href = {% url 'free-event-page'%}>                            <span class="las la-eye"></span>
+                      <a href = {% url 'free-event-page'%}>                            
+                            <span class="las la-eye"></span>
                             <small>View Free Events</small>
                         </a>
                     </li>
                     <li>
-                      <a href = {% url 'cancelled_event_page'%}>                            <span class="las la-ban"></span>
+                      <a href = {% url 'cancelled_event_page'%}>                            
+                            <span class="las la-ban"></span>
                             <small>Cancelled Events</small>
                         </a>
                     </li>
@@ -72,20 +85,25 @@
             </div>
         </div>
     </div>
-    
+
+
+
     <div class="main-content">
         
         <header>
+            {% if user.is_superuser %}
+
             <div class="header-content">
                 <label for="menu-toggle">
                     <span class="las la-bars"></span>
                 </label>
-                
+
                 <div class="header-menu">
+
                     <label for="">
                         <span class="las la-search"></span>
                     </label>
-                    
+
                     <div class="notify-icon">
                         <span class="las la-envelope"></span>
                         <span class="notify">4</span>
@@ -98,13 +116,33 @@
                     
                     <div class="user">
                         <div class="bg-img" style="background-image: url(img/1.jpeg)"></div>
-                        
-                        <span class="las la-power-off"></span>
-                        <span>Logout</span>
+                        <a href="{%url 'logout' %}">
+                            <span class="las la-power-off"></span>
+                            <span>Logout</span>
+                        </a>
                     </div>
+
                 </div>
+
             </div>
+            {%else%}
+            <div class="header-content">
+                <div class="header-menu">    
+                    <div class="user">
+                        <div class="bg-img" style="background-image: url(img/1.jpeg)"></div>
+                        <a href="{%url 'user_events_page' %}">
+                            <span class="las la-power-off"></span>
+                            <span>Log in</span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+            {%endif%}
+
         </header>
+
         
         
         <main>
@@ -113,6 +151,17 @@
                 <h1>Dashboard</h1>
                 <small>Home / Dashboard</small>
             </div>
+            {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <div class="error">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="success">{{ message }}</div>
+                {% endif %}
+                {% endfor %}
+            {% endif %}
             
             <div class="page-content">
             

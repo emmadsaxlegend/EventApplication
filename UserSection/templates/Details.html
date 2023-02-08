@@ -2,32 +2,35 @@
 {% load static %}
 
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Responsive Grocery Website Design Tutorial</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product detail page</title>
+
+  <link rel="stylesheet" href="{% static '/css/details_style.css' %}">
 
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="{% static '/css/index_style.css' %}">
-    <script src="https://kit.fontawesome.com/3b31762e2b.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/3b31762e2b.js" crossorigin="anonymous"></script>
 
 </head>
-<body class="mobile">
 
-
-<nav>
-    <div class="container nav-wrapper">
+<body>
+  <nav>
+    <div class="containers nav-wrapper">
         <div class="brand">
-            <a href="{%url 'user_events_page' %}">
-            <img src="./static/image/logoe.PNG" width="80" height="50" padding="5px">
-            </a>
+          <a href="{%url 'user_events_page' %}">
+            <img src="{% static 'image/logoe.PNG' %}" width="50">
+          </a>
 
-            <span><strong>Event XYZ</strong></span>
+            <a href="{%url 'user_events_page' %}">
+
+            <span><strong style="color:white">Event XYZ</strong></span>
+          </a>
         </div>
         <div class="hamburger">
             <span></span>
@@ -37,7 +40,7 @@
         <ul class="nav-list">
             
             <li>
-                <a href="#">Order Events By...</a>
+                <a href="#">Services</a>
                
                 <ul class="dropdown-list">
                     <li><a href="{% url 'order_by_date_accend' %}">Date Accending</a></li>
@@ -65,15 +68,8 @@
             <li>
                 <a href="#">Hello {{user}}</a>
                 <ul class="dropdown-list">
-                    <li>
-                        <a href="{%url 'admin_events_page' %}">Admin Dashboard</a>
-                    </li>
-
-                    <li>
-                        <a href="{%url 'logout' %}">
-                        <input type="submit" name="log-out" value="Log Out" class="btn">
-                        </a>
-                    </li><br>
+                    <li><input type="submit" name="log-out" value="Log Out" class="btn"></li><br>
+                    <li><a href="{%url 'admin_events_page' %}">View Admin Dashboard</a></li>
                 </ul>
             </form>
 
@@ -83,17 +79,25 @@
         </ul>
     </div>
 </nav>
-<script src="/script.js"></script>
+<script src="{% static '/js/script.js' %}"></script>
+    
 
+  <main>
+    <a href="{% url 'user_events_page' %}">
+        <button> <i class="fa fa-arrow-left">Back</i> </button>
+    </a>
+    <article>
 
-{% block home%}
+      {%block details%}
 
-{% endblock%}
+      
+      {%endblock%}
 
-<!-- blogs section ends -->
+      
+    </article>
+  </main>
 
-
-<div class="footer" id="footer">
+  <div class="footer" id="footer">
 
     <div class="box-container">
 
@@ -166,9 +170,88 @@
 </div>
 
 
-<!-- custom js file link  -->
-<script src="{% static '/js/script.js' %}"></script>
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
+
 </html>
 
+
+
+{% comment %} 
+<h1> Event Detail </h1>
+{%if event.header_images%}
+    <img src = "{{event.header_images.url}}" width=400 height = 400><br>
+{%endif%}
+    Event Name: {{event.event_name}} <br/>
+    Description: {{event.description}}<br>
+    Location: {{event.location}} <br>
+
+    {%if event.price%}
+        Price: {{event.price}}<br>
+        
+    {%else%}
+        Price: Free 
+        
+    {%endif%}
+
+    {%if event.space_capacity%}
+    Space Capacity: {{event.space_capacity}}<br>
+
+    {{event.bookings}} People Registered<br>
+
+    {%if event.slot_left == 0%}
+        <span class="del">Slot Left: {{event.space_capacity}}</span>
+    {%else%}
+        <span class="del">Slot Left: {{event.slot_left}}</span>
+    {%endif%}
+    {%endif%}
+
+    Event Date: {{event.event_date}} <br>
+
+    {%if event.event_end_date%}
+        End of Registration Date: {{event.event_end_date}} <br>
+    {%endif%}
+
+    {% for customer in object_list %}
+    Number of people registered
+    {%endfor%}
+
+    
+   {% if event.space_capacity%}
+
+    <form action="{% url 'vote' event.pk %}" method="post">
+        {% csrf_token %}
+        <div>
+            <input type="radio" name="poll" id="exampleRadios1" value="option1" required>
+            <label for="exampleRadios1">
+                I have read Terms and Conditions
+            </label>
+        </div>
+
+        <div>
+            <label>Email</label> 
+            <input type="text" required onkeyup="this.setAttribute('value', this.value);" name="email" placeholder="Email" value="">
+        </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="number" required onkeyup="this.setAttribute('value', this.value);" name="phone" placeholder="Phone Number" value=""> 
+          </div>
+
+          <div>
+            <input type="radio" name="event_id" id="exampleRadios12" value="option2" required>
+            <label for="exampleRadios1">
+                I have read Terms and Conditions 2
+            </label>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Register</button>
+    </form>
+    {%endif%}
+
+    {%if event.event_end_date%}
+            {{event.bookDate}}
+    {%endif%} {% endcomment %}
