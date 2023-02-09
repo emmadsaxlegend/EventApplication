@@ -52,13 +52,13 @@
                 <a href="#">Admin</a>
                 <form class = "login-form" action= "{% url 'login' %}" method="POST">
                     {% csrf_token %}
-                <ul class="form">
-                    <li><h3 style="color:black">Enter Login Details</h3></li>
-                    <li><input class="box" type="text" required onkeyup="this.setAttribute('value', this.value);" name="username" placeholder="Username" value=""></li>
-                    <li><input class="box" type="password" required onkeyup="this.setAttribute('value', this.value);" name="password" placeholder="Password" value=""></li>
-                    <li><input type="submit" name="sign-in" value="Log In" class="btn"></li>
-                </ul>
-            </form>
+                    <ul class="form">
+                        <li><h3 style="color:black">Enter Login Details</h3></li>
+                        <li><input class="box" type="text" required onkeyup="this.setAttribute('value', this.value);" name="username" placeholder="Username" value=""></li>
+                        <li><input class="box" type="password" required onkeyup="this.setAttribute('value', this.value);" name="password" placeholder="Password" value=""></li>
+                        <li><input type="submit" name="sign-in" value="Log In" class="btn"></li>
+                    </ul>
+                </form>
 
             </li>
             {%else%}

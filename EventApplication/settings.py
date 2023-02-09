@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "AdminSection",
     "UserSection",
+     "corsheaders",
     ]
 
 MIDDLEWARE = [
@@ -70,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",    
 ]
 
 ROOT_URLCONF = "EventApplication.urls"
@@ -162,3 +164,10 @@ EMAIL_HOST_USER = 'c2b55ff16ac136'
 EMAIL_HOST_PASSWORD = 'cab34aa79a337b'
 EMAIL_PORT = '2525'
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'https://web-production-eefb.up.railway.app',
+]
