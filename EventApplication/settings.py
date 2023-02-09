@@ -167,7 +167,7 @@ EMAIL_PORT = '2525'
 
 
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    'https://web-production-06a0.up.railway.app/',
-]
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = [
+#     'https://web-production-06a0.up.railway.app/',
+# ]
