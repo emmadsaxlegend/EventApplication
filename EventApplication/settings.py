@@ -169,5 +169,5 @@ EMAIL_PORT = '2525'
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
-    'https://web-production-eefb.up.railway.app',
+    'https://web-production-06a0.up.railway.app/',
 ]
