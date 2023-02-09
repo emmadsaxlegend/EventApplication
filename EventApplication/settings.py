@@ -140,11 +140,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'AdminSection/static')
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'UserSection/static')
 ]
 
 
@@ -171,3 +171,5 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
     'https://web-production-06a0.up.railway.app/',
 ]
+
+CSRF_TRUSTED_ORIGINS = ['https://web-production-06a0.up.railway.app/']
