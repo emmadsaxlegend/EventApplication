@@ -61,7 +61,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "AdminSection",
     "UserSection",
-     "corsheaders",
+    "corsheaders",
+    "whitenoise.runserver_nostatic",    
+
     ]
 
 MIDDLEWARE = [
@@ -73,6 +75,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",    
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
 ]
 
 ROOT_URLCONF = "EventApplication.urls"
@@ -135,9 +139,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 STATICFILES_DIRS = [
@@ -147,6 +151,8 @@ STATICFILES_DIRS = [
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'UserSection/static')
 # ]
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 
 MEDIA_URL = '/media/'
