@@ -192,7 +192,7 @@ def verify_free_payment(request:HttpRequest, ref:str) -> HttpResponse:
     
     if not verified:
         send_mail(subject, message, message_from,[payment.email])
-        messages.success(request, "Payment Received successfully \n Check your email for futher information")
+        messages.success(request, "Registration successfully \n Check your email for futher information")
     else:
         messages.error(request, "Verification Failled")
     return redirect('user_events_page')

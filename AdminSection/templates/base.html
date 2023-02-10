@@ -22,12 +22,7 @@
     <div class="sidebar">
         <div class="side-header">
             {%if user.is_superuser %}
-                <span class="las la-home"></span>
-                <h3><a href="{%url 'user_events_page'%}">Event XYZ</a></h3>
-            {%else%}
-                <span class="las la-home"></span>
-                <h3><a href="{%url 'user_events_page'%}">Event XYZ</a></h3>
-
+                <h3 style="color:white">Event XYZ</h3>
             {%endif%}
         </div>
         
@@ -94,15 +89,24 @@
             {% if user.is_superuser %}
 
             <div class="header-content">
-                <label for="menu-toggle">
+                <label for="menu-toggle" style="color:white">
                     <span class="las la-bars"></span>
+                    <a href="{%url 'user_events_page'%}"><span class="las la-home"></span></a>
+                    <span><a href="{%url 'user_events_page'%}">Event Page</a></span>
                 </label>
 
-                <div class="header-menu">
+                {% comment %} <label for="" style="color:white">
+                    <span class="las la-home"></span>
+                    <span><a href="{%url 'user_events_page'%}">Event Page</a></span>
 
-                    <label for="">
+                </label> {% endcomment %}
+
+                <div class="header-menu">
+          
+                    {% comment %} <label for="">
                         <span class="las la-search"></span>
                     </label>
+                   
 
                     <div class="notify-icon">
                         <span class="las la-envelope"></span>
@@ -112,10 +116,9 @@
                     <div class="notify-icon">
                         <span class="las la-bell"></span>
                         <span class="notify">3</span>
-                    </div>
+                    </div> {% endcomment %}
                     
                     <div class="user">
-                        <div class="bg-img" style="background-image: url(img/1.jpeg)"></div>
                         <a href="{%url 'logout' %}">
                             <span class="las la-power-off"></span>
                             <span>Logout</span>

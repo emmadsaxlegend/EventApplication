@@ -224,7 +224,7 @@ header {
 
 .header-content {
     justify-content: space-between;
-    padding: 0rem 1rem;
+    padding: 0.5rem 1rem;
 }
 
 .header-content label:first-child span {
