@@ -134,14 +134,29 @@ class UpdateEventView(SuccessMessageMixin, UpdateView):
     fields = ['event_name', 'location', 'price', 'space_capacity', 'description', 'event_date', 'event_end_date']
     success_message = 'Event Updated successfully!!'
 
+    
+
     def form_valid(self, form):
-            event = self.get_object()
-            space_capacity = form.cleaned_data['space_capacity']
-            if space_capacity < event.bookings:
-                messages.error(self.request, "Space capacity cant be less than the number of bookings!!.")
-                form.add_error('space_capacity', 'Space capacity can not be less than bookings')
-                return self.form_invalid(form)
-            return super().form_valid(form)
+
+        event = self.get_object()
+        print(event.space_capacity-event.bookings)
+        space_capacity = form.cleaned_data['space_capacity']
+        event.slot_left = space_capacity-event.bookings
+        print(event.slot_left)
+
+        if space_capacity < event.bookings:
+            messages.error(self.request, "Space capacity cant be less than the number of bookings!!.")
+            form.add_error('space_capacity', 'Space capacity can not be less than bookings')
+            return self.form_invalid(form)
+        
+        event.slot_left = space_capacity-event.bookings
+        event.space_capacity = space_capacity
+
+        response = super().form_valid(form)
+        event.save()
+        return response
+
+    
 
 class UpdateFreeEvent(SuccessMessageMixin, UpdateView):
     model = Event
