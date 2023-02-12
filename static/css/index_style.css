@@ -394,14 +394,14 @@ nav ul.form {
 }
 
 .mobile ul.dropdown-list {
-    /* display: contents; */
-    position: relative;
+    display: contents;
+    /* position: relative;
     background: transparent;
     text-align: center;
     height: 0;
     overflow-y: hidden;
     transition: opacity 1s ease-in-out;
-    padding-top: 0;
+    padding-top: 0; */
 }
 
 .mobile ul.nav-list .form {
