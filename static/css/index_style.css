@@ -643,10 +643,7 @@ nav ul.form {
     #menu-btn{
         display: inline-block;
     }
-    body{
-        position: fixed;
-
-    }
+  
      .search-form{
         width:90%;
     }
