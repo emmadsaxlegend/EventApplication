@@ -34,6 +34,15 @@
             <span></span>
         </div>
         <ul class="nav-list">
+
+            <li>               
+                <ul class="show">
+                    <li><a href="{% url 'order_by_date_accend' %}">Accending Order</a></li>
+                    <li><a href="{% url 'order_by_date_decend' %}">Decending Order</a></li>
+                    <li><a href="{% url 'free_event_page' %}">Free Order </a></li>
+                    <li><a href="{% url 'paid_event_page' %}">Paid Order </a></li>
+                </ul>
+            </li>
             
             <li>
                 <a href="#">Order Events By...</a>
@@ -45,6 +54,7 @@
                     <li><a href="{% url 'paid_event_page' %}">Paid Order </a></li>
                 </ul>
             </li>
+           
 
             {%if not  user.is_superuser %}
             <li>

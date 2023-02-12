@@ -167,6 +167,7 @@ section{
     transition: all .5s ease-in-out;
 }
 
+
 .nav-wrapper ul.nav-list li a:hover, .nav-wrapper ul.nav-list li.active a {
     color: var(--orange);
 }
@@ -222,6 +223,11 @@ nav ul.dropdown-list {
     transform: translateX(-50%);
     opacity: 0;
     pointer-events: none;
+}
+
+nav ul .show {
+    display: none;
+   
 }
 
 .nav-wrapper ul.dropdown-list li {
@@ -363,6 +369,7 @@ nav ul.form {
 }
 
 
+
 .mobile .hamburger span {
     transform-origin: left;
     transition: all .3s ease-in-out;
@@ -394,6 +401,16 @@ nav ul.form {
 }
 
 .mobile ul.dropdown-list {
+    display: none;
+    /* position: relative;
+    background: transparent;
+    text-align: center;
+    height: 0;
+    overflow-y: hidden;
+    transition: opacity 1s ease-in-out;
+    padding-top: 0; */
+}
+.mobile ul.show {
     display: contents;
     /* position: relative;
     background: transparent;
