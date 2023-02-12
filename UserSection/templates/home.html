@@ -33,20 +33,8 @@
             <span></span>
             <span></span>
         </div>
-        <ul class="nav-list">
-
-            <li>               
-                <ul class="show">
-                    <div>
-                    <a href="#" >Order Events By...</a>
-                    </div>
-                    <li><a href="{% url 'order_by_date_accend' %}">Accending Order</a></li>
-                    <li><a href="{% url 'order_by_date_decend' %}">Decending Order</a></li>
-                    <li><a href="{% url 'free_event_page' %}">Free Order </a></li>
-                    <li><a href="{% url 'paid_event_page' %}">Paid Order </a></li>
-                </ul>
-            </li>
-            
+        <ul class="nav-list">  
+           
             <li>
                 <a href="#">Order Events By...</a>
                
@@ -56,12 +44,21 @@
                     <li><a href="{% url 'free_event_page' %}">Free Order </a></li>
                     <li><a href="{% url 'paid_event_page' %}">Paid Order </a></li>
                 </ul>
+            </li> 
+
+            <li>               
+                <ul class="show">
+                    <li><a href="{% url 'order_by_date_accend' %}">Accending Order</a></li>
+                    <li><a href="{% url 'order_by_date_decend' %}">Decending Order</a></li>
+                    <li><a href="{% url 'free_event_page' %}">Free Order </a></li>
+                    <li><a href="{% url 'paid_event_page' %}">Paid Order </a></li>
+                </ul>
             </li>
-           
 
             {%if not  user.is_superuser %}
             <li>
-                <a href="#">Admin</a>
+                <a href="#" id="admin-link">Admin Section</a>
+                <h3 id="login-header">Click link above to login</h3>
                 <form class = "login-form" action= "{% url 'login' %}" method="POST">
                     {% csrf_token %}
                     <ul class="form">
@@ -71,8 +68,8 @@
                         <li><input type="submit" name="sign-in" value="Log In" class="btn"></li>
                     </ul>
                 </form>
-
             </li>
+
             {%else%}
             <li>
                 <a href="#">Hello {{user}}</a>
@@ -95,6 +92,7 @@
         </ul>
     </div>
 </nav>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/script.js"></script>
 
 

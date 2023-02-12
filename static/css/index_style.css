@@ -378,9 +378,10 @@ nav ul.form {
 
 .mobile ul.nav-list li a {
     font-size: 18px;
-    /* color: var(--orange); */
-    padding-left: 10px;
-
+    color: var(--orange);
+}
+.mobile ul.nav-list li .show{
+    font-size: 12px;
 }
 
 .mobile ul.nav-list li h3{
@@ -410,16 +411,12 @@ nav ul.form {
     transition: opacity 1s ease-in-out;
     padding-top: 0; */
 }
+.mobile ul.show  li a {
+    color: var(--pure);
+    font-size: 12px;
+} 
 .mobile ul.show {
     display: contents;
-
-    /* position: relative;
-    background: transparent;
-    text-align: center;
-    height: 0;
-    overflow-y: hidden;
-    transition: opacity 1s ease-in-out;
-    padding-top: 0; */
 }
 
 
@@ -432,24 +429,21 @@ nav ul.form {
     padding-left: 15px;
 }
 
-.mobile .nav-wrapper ul li:hover .dropdown-list {
+/* .mobile .nav-wrapper ul li:hover .dropdown-list {
     height: max-content;
     padding-top: 6px;
-}
+} */
 
 .mobile ul.nav-list li {
     margin-left: 0;
     text-align: left;
+
 }
 
 .mobile .nav-wrapper ul.dropdown-list li a {
-    color: var(--pure);
+    /* color: var(--pure);
     font-size: 10px;
-    padding: 15px;
-}
-
-.mobile body{
-   position: fixed;
+    padding: 15px; */
 }
 
 /* End Navbar */

@@ -41,11 +41,22 @@ hamburger.addEventListener('click', function() {
 })
 
 
-$("hamburger").click(function () {
-  $("body").addClass("noscroll");
+// $(document).ready(function() {
+//   $("a[href='#']").click(function() {
+//     $("h3").hide();
+//   });
+// });
+
+
+var adminLink = document.getElementById("admin-link");
+var loginHeader = document.getElementById("login-header");
+
+adminLink.addEventListener("click", function() {
+  loginHeader.style.display = "none";
 });
 
-// Hide the navigation bar
-$("hamburger").click(function () {
-  $("body").removeClass("noscroll");
+document.addEventListener("click", function(event) {
+  if (!event.target.closest("#admin-link")) {
+    loginHeader.style.display = "block";
+  }
 });
