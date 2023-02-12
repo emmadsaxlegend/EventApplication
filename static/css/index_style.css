@@ -429,6 +429,9 @@ nav ul.form {
 .mobile .nav-wrapper ul .form li {
     padding-left: 15px;
 }
+.mobile .nav-wrapper ul .form h3 {
+    color: var(--orange);
+}
 
 /* .mobile .nav-wrapper ul li:hover .dropdown-list {
     height: max-content;
