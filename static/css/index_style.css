@@ -378,7 +378,7 @@ nav ul.form {
 
 .mobile ul.nav-list li a {
     font-size: 18px;
-    color: var(--orange);
+    /* color: var(--orange); */
     padding-left: 10px;
 
 }
@@ -412,7 +412,7 @@ nav ul.form {
 }
 .mobile ul.show {
     display: contents;
-    
+
     /* position: relative;
     background: transparent;
     text-align: center;
