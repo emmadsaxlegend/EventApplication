@@ -394,7 +394,7 @@ nav ul.form {
 }
 
 .mobile ul.dropdown-list {
-    display: contents;
+    /* display: contents; */
     position: relative;
     background: transparent;
     text-align: center;
@@ -405,7 +405,7 @@ nav ul.form {
 }
 
 .mobile ul.nav-list .form {
-    display: contents;
+    /* display: contents; */
 }
 
 .mobile .nav-wrapper ul .form li {
