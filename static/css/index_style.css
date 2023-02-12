@@ -421,7 +421,8 @@ nav ul.form {
 
 
 .mobile ul.nav-list .form {
-    /* display: contents; */
+    border-radius: 15px;
+    margin-left: 30px;
 }
 
 
