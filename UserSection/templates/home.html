@@ -26,7 +26,6 @@
             <a href="{%url 'user_events_page' %}">
             <img src="https://cdna.artstation.com/p/users/avatars/001/971/658/large/67d915ace8c2c8ababfaed092b89af42.jpg?1604314945" width="80" height="50" padding="5px" alt="Event XYZ Logo">
             </a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
             <span><strong>Event XYZ</strong></span>
         </div>
         <div class="hamburger">
@@ -40,10 +39,10 @@
                 <a href="#">Order Events By...</a>
                
                 <ul class="dropdown-list">
-                    <li><a href="{% url 'order_by_date_accend' %}">Date Accending</a></li>
-                    <li><a href="{% url 'order_by_date_decend' %}">Date Decending</a></li>
-                    <li><a href="{% url 'free_event_page' %}">Free Events</a></li>
-                    <li><a href="{% url 'paid_event_page' %}">Paid Events</a></li>
+                    <li><a href="{% url 'order_by_date_accend' %}">Accending Order</a></li>
+                    <li><a href="{% url 'order_by_date_decend' %}">Decending Order</a></li>
+                    <li><a href="{% url 'free_event_page' %}">Free Order </a></li>
+                    <li><a href="{% url 'paid_event_page' %}">Paid Order </a></li>
                 </ul>
             </li>
 
@@ -53,7 +52,7 @@
                 <form class = "login-form" action= "{% url 'login' %}" method="POST">
                     {% csrf_token %}
                     <ul class="form">
-                        <li><h3 style="color:black">Enter Login Details</h3></li>
+                        <li><h3>Enter Login Details</h3></li>
                         <li><input class="box" type="text" required onkeyup="this.setAttribute('value', this.value);" name="username" placeholder="Username" value=""></li>
                         <li><input class="box" type="password" required onkeyup="this.setAttribute('value', this.value);" name="password" placeholder="Password" value=""></li>
                         <li><input type="submit" name="sign-in" value="Log In" class="btn"></li>
