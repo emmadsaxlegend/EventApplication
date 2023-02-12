@@ -529,6 +529,14 @@ nav ul.form {
 
   }
   
+
+  #progress-bar {
+    width: 0%;
+    height: 5px;
+    background-color: green;
+    transition: width 1s;
+  }
+  
   
   
   /*-----------------------------------*\

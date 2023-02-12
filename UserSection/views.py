@@ -18,7 +18,7 @@ from django.db.models import Sum
 class EventView(ListView):
     model = Event
     template_name = "all-events.html"
-    paginate_by = 8
+    paginate_by = 4
 
 
 class BookView(ListView):
@@ -208,3 +208,7 @@ def view_analytics(request):
     return render(request, 'view_analytics.html', {
         'num_visitors': request.session.get('num_visitors', 0)
     })
+
+
+def loading_page(request):
+    return render(request, 'loading_page.html')

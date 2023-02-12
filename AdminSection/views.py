@@ -106,7 +106,7 @@ def create_paid_event(request):
 class EventView(ListView):
     model = Event
     template_name = "events_page.html"
-    paginate_by = 5
+    paginate_by = 4
 
 
 
