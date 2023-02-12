@@ -43,9 +43,8 @@ html{
 body{
     font-family: 'Lato', sans-serif;
     background: rgba(40, 98, 47, 0.627);
-    color: var(--pure);
-}
-    
+
+    color: var(--pure);}
 
 section{
     padding:2rem 9%;
@@ -112,8 +111,9 @@ section{
     width: 100%;
     margin: 0 auto;
     background: #0f4032;
-    /* position: fixed;
-    z-index: 9999; */
+    position: fixed;
+    z-index: 9999;
+    
 
 }
 .container .brand{
@@ -252,7 +252,6 @@ nav ul.form {
     transform: translateX(-50%);
     opacity: 0;
     pointer-events: none;
-    color: black;
 }
 
 .nav-wrapper ul.form li {
@@ -330,7 +329,6 @@ nav ul.form {
 }
 
 
-
 .mobile .hamburger span {
     transform-origin: left;
     transition: all .3s ease-in-out;
@@ -400,8 +398,11 @@ nav ul.form {
    position: fixed;
 }
 
-
 /* End Navbar */
+
+
+
+
 
 
 
@@ -623,7 +624,6 @@ nav ul.form {
     html{
         font-size: 55%;
     }
-   
 
     .header{
         padding:2rem;
@@ -643,7 +643,7 @@ nav ul.form {
     #menu-btn{
         display: inline-block;
     }
-  
+
      .search-form{
         width:90%;
     }
