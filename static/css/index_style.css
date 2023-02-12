@@ -433,10 +433,6 @@ nav ul.form {
     color: var(--orange);
 }
 
-/* .mobile .nav-wrapper ul li:hover .dropdown-list {
-    height: max-content;
-    padding-top: 6px;
-} */
 
 .mobile ul.nav-list li {
     margin-left: 0;
