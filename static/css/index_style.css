@@ -290,7 +290,6 @@ nav ul.form {
     flex-direction: column;
     padding: 20px 0;
     cursor: pointer;
-
 }
 
 .mobile .hamburger span {
@@ -301,7 +300,8 @@ nav ul.form {
 }
 
 .mobile ul.nav-list {
-    background: var(--tgreen);
+    background: -webkit-linear-gradient(45deg, #434343, #000000);
+    background: linear-gradient(45deg, #434343, #000000);
     position: fixed;
     left: 0;
     top: 0;
@@ -311,12 +311,8 @@ nav ul.form {
     flex-direction: column;
     padding-top: 80px;
     opacity: 0;
-    transition: all .8s ease-in-out;
-
-    /* z-index: 9999;
-    border-radius: 20px;
-    border: solid; */
-
+    pointer-events: none;
+    transition: all .3s ease-in-out;
 }
 
 .hamburger, .brand {
@@ -328,7 +324,6 @@ nav ul.form {
     pointer-events: auto;  
 }
 
-
 .mobile .hamburger span {
     transform-origin: left;
     transition: all .3s ease-in-out;
@@ -336,31 +331,10 @@ nav ul.form {
 }
 
 .mobile ul.nav-list li a {
-    font-size: 18px;
-    color: var(--orange);
-    padding-left: 10px;
-
-}
-
-.mobile ul.nav-list li h3{
-    font-size: 14px;
-    color: white;
-}
-.mobile ul.nav-list li .btn{
-    background: var(--orange);
-    color: var(--pure);
-    outline: none;
-    padding: 4px 12px;
-    font-size: 10px;
-    cursor: pointer;
-    letter-spacing: 1px;
-    border: 1px solid transparent;
-    transition: all .5s ease-in-out;
-    border-radius: 15px;
+    font-size: 20px;
 }
 
 .mobile ul.dropdown-list {
-    display: contents;
     position: relative;
     background: transparent;
     text-align: center;
@@ -370,14 +344,6 @@ nav ul.form {
     padding-top: 0;
 }
 
-.mobile ul.nav-list .form {
-    display: contents;
-}
-
-.mobile .nav-wrapper ul .form li {
-    padding-left: 15px;
-}
-
 .mobile .nav-wrapper ul li:hover .dropdown-list {
     height: max-content;
     padding-top: 6px;
@@ -385,22 +351,13 @@ nav ul.form {
 
 .mobile ul.nav-list li {
     margin-left: 0;
-    text-align: left;
+    text-align: center;
 }
 
 .mobile .nav-wrapper ul.dropdown-list li a {
-    color: var(--pure);
-    font-size: 10px;
-    padding: 15px;
+    color: var(--dark-gray);
 }
-
-.mobile body{
-   position: fixed;
-}
-
 /* End Navbar */
-
-
 
 
 
