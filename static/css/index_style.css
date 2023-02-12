@@ -412,6 +412,7 @@ nav ul.form {
 }
 .mobile ul.show {
     display: contents;
+    
     /* position: relative;
     background: transparent;
     text-align: center;
@@ -420,6 +421,7 @@ nav ul.form {
     transition: opacity 1s ease-in-out;
     padding-top: 0; */
 }
+
 
 .mobile ul.nav-list .form {
     /* display: contents; */
