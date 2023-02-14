@@ -10,7 +10,8 @@ from django.conf import settings
 from django.http.request import HttpRequest
 from django.db.models import Sum
 
-
+from datetime import timedelta
+from celery import shared_task
 
 
 # Create your views here.
@@ -199,16 +200,27 @@ def verify_free_payment(request:HttpRequest, ref:str) -> HttpResponse:
 
 
 
-# Create your views here.
-def view_analytics(request):
-    # Increment the number of visitors
-    request.session['num_visitors'] = request.session.get('num_visitors', 0) + 1
 
-    # Render the analytics page
-    return render(request, 'view_analytics.html', {
-        'num_visitors': request.session.get('num_visitors', 0)
-    })
+@shared_task
+def send_reminder_email(event_registration_id, days_to_event):
+    event_registration = EventRegistration.objects.get(id=event_registration_id)
+    user = event_registration.user
+    event = event_registration.event
+    event_date = event.date
 
+    # Calculate the date to send the reminder email
+    reminder_date = event_date - timedelta(days=days_to_event)
 
-def loading_page(request):
-    return render(request, 'loading_page.html')
+    # Send the reminder email
+    subject = f"Reminder: {event.name} is coming up"
+    message = f"Hello {user.first_name}, this is a friendly reminder that {event.name} is coming up on {event_date}."
+    from_email = "yourwebsite@example.com"
+    recipient_list = [user.email]
+    send_mail(subject, message, from_email, recipient_list)
+
+    # Update the event registration to record that a reminder has been sent
+    if days_to_event == 7:
+        event_registration.reminder_sent_7_days_before = timezone.now()
+    elif days_to_event == 1:
+        event_registration.reminder_sent_1_day_before = timezone.now()
+    event_registration.save()

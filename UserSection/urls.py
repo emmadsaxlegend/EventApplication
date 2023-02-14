@@ -24,8 +24,4 @@ urlpatterns = [
 
     path('<str:ref>/', views.verify_free_payment, name="freebooking"),
 
-
-    path('analytics/', views.view_analytics, name="view_analytics"),
-
-
 ]

@@ -275,6 +275,13 @@ nav ul.form {
     animation: moveUp .5s ease-in-out forwards;
 }
 
+.nav-wrapper ul .form h3 {
+    color: var(--orange);
+}
+.nav-wrapper ul .login_header{
+    display: none;
+}
+
 
 @keyframes moveUp {
     0% {
