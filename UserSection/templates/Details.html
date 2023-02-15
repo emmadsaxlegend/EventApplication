@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product detail page</title>
+  <title>Event details page</title>
 
   <link rel="stylesheet" href="{% static '/css/details_style.css' %}">
 
@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <nav>
+  {% comment %} <nav>
     <div class="containers nav-wrapper">
         <div class="brand">
           <a href="{%url 'user_events_page' %}">
@@ -80,7 +80,7 @@
            
         </ul>
     </div>
-</nav>
+</nav> {% endcomment %}
 <script src="{% static '/js/script.js' %}"></script>
     
 
@@ -88,7 +88,6 @@
     <a href="{% url 'user_events_page' %}">
         <button> <i class="fa fa-arrow-left">Back</i> </button>
     </a>
-    <article>
 
       {%block details%}
 
@@ -96,10 +95,9 @@
       {%endblock%}
 
       
-    </article>
   </main>
 
-  <div class="footer" id="footer">
+  {% comment %} <div class="footer" id="footer">
 
     <div class="box-container">
 
@@ -169,7 +167,7 @@
         </div>
     </div>
 
-</div>
+</div> {% endcomment %}
 
 
   <!-- 
@@ -182,78 +180,3 @@
 
 </html>
 
-
-
-{% comment %} 
-<h1> Event Detail </h1>
-{%if event.header_images%}
-    <img src = "{{event.header_images.url}}" width=400 height = 400><br>
-{%endif%}
-    Event Name: {{event.event_name}} <br/>
-    Description: {{event.description}}<br>
-    Location: {{event.location}} <br>
-
-    {%if event.price%}
-        Price: {{event.price}}<br>
-        
-    {%else%}
-        Price: Free 
-        
-    {%endif%}
-
-    {%if event.space_capacity%}
-    Space Capacity: {{event.space_capacity}}<br>
-
-    {{event.bookings}} People Registered<br>
-
-    {%if event.slot_left == 0%}
-        <span class="del">Slot Left: {{event.space_capacity}}</span>
-    {%else%}
-        <span class="del">Slot Left: {{event.slot_left}}</span>
-    {%endif%}
-    {%endif%}
-
-    Event Date: {{event.event_date}} <br>
-
-    {%if event.event_end_date%}
-        End of Registration Date: {{event.event_end_date}} <br>
-    {%endif%}
-
-    {% for customer in object_list %}
-    Number of people registered
-    {%endfor%}
-
-    
-   {% if event.space_capacity%}
-
-    <form action="{% url 'vote' event.pk %}" method="post">
-        {% csrf_token %}
-        <div>
-            <input type="radio" name="poll" id="exampleRadios1" value="option1" required>
-            <label for="exampleRadios1">
-                I have read Terms and Conditions
-            </label>
-        </div>
-
-        <div>
-            <label>Email</label> 
-            <input type="text" required onkeyup="this.setAttribute('value', this.value);" name="email" placeholder="Email" value="">
-        </div>
-          <div>
-            <label>Phone Number</label>
-            <input type="number" required onkeyup="this.setAttribute('value', this.value);" name="phone" placeholder="Phone Number" value=""> 
-          </div>
-
-          <div>
-            <input type="radio" name="event_id" id="exampleRadios12" value="option2" required>
-            <label for="exampleRadios1">
-                I have read Terms and Conditions 2
-            </label>
-        </div>
-        <button type="submit" class="btn btn-outline-primary">Register</button>
-    </form>
-    {%endif%}
-
-    {%if event.event_end_date%}
-            {{event.bookDate}}
-    {%endif%} {% endcomment %}
