@@ -194,3 +194,5 @@ def verify_free_payment(request:HttpRequest, ref:str) -> HttpResponse:
     else:
         messages.error(request, "Verification Failled")
     return redirect('user_events_page')
+
+
