@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 #from dotenv import load_dotenv
 #import environ
@@ -23,11 +23,11 @@ load_dotenv()
 # reading .env file
 #environ.Env.read_env()
 
-PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
-PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
+# PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+# PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
 
-# PAYSTACK_SECRET_KEY = 'sk_test_645277eefa0e9c621e4eaf1b06de642c56dc4375'
-# PAYSTACK_PUBLIC_KEY = 'pk_test_7423669631139e962499ac54324490e6ef999137'
+PAYSTACK_SECRET_KEY = 'sk_test_645277eefa0e9c621e4eaf1b06de642c56dc4375'
+PAYSTACK_PUBLIC_KEY = 'pk_test_7423669631139e962499ac54324490e6ef999137'
 
 
 
@@ -46,7 +46,7 @@ SECRET_KEY = "django-insecure-(kx(&*^iz54syod#vj^gss&v0hv82#o4#*pb3nz87!8($5(qn8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['web-production-06a0.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 
@@ -172,11 +172,3 @@ EMAIL_HOST_PASSWORD = 'cab34aa79a337b'
 EMAIL_PORT = '2525'
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = [
-    'https://web-production-06a0.up.railway.app',
-]
-
-CSRF_TRUSTED_ORIGINS = ['https://web-production-06a0.up.railway.app']

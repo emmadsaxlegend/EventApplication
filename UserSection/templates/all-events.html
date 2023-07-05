@@ -24,6 +24,17 @@
 
     
 </section>
+{% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "error" %}
+        <div class="error">
+            {{ message }}
+        </div>
+    {% else %}
+        <div class="success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+{% endif %}
 
 <section class="blogs" id="blogs">
     <div class="myevent">
