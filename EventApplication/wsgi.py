@@ -15,4 +15,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EventApplication.settings")
 
 application = get_wsgi_application()
 
-# app = application
