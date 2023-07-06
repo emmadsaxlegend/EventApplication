@@ -176,8 +176,7 @@ EMAIL_HOST_PASSWORD = 'cab34aa79a337b'
 EMAIL_PORT = '2525'
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-AWS_ACCESS_KEY_ID = "AKIAXODDT3XOV7NTTGUM"
-AWS_SECRET_ACCESS_KEY = "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"
+
 
 AWS_STORAGE_BUCKET_NAME = "mybucket-arno-9"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
